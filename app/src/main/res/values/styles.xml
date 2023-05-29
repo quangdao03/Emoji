@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+
+    <style name="TextViewBase">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/sp16</item>
+    </style>
+    <style name="NoActionBarSplash" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/white</item>
+    <item name="colorPrimaryVariant">@color/white</item>
+    <item name="colorOnPrimary">@color/white</item>
+    <item name="colorPrimaryDark">@color/white</item>
+    <item name="colorSecondary">@color/white</item>
+    <item name="colorSecondaryVariant">@color/white</item>
+    <item name="colorOnSecondary">@color/white</item>
+    <item name="android:statusBarColor" tools:ignore="NewApi">@color/white</item>
+    <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    </style>
+    <style name="NoActionBarHome" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/color_color_FFDFC2</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    </style>
+</resources>

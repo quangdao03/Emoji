@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateIconActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_export"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#F4DED3"
+        android:paddingVertical="@dimen/dp20"
+        app:layout_constraintBottom_toTopOf="@+id/rl_control"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/img_bg"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon1bg" />
+
+        <ImageView
+            android:id="@+id/img_bg1"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_control"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dp10"
+            android:paddingVertical="@dimen/dp10">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_restart" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/flip_hozi"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:padding="@dimen/dp2"
+                    android:src="@drawable/ic_flip_horizontal" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@id/flip_hozi"
+                    android:padding="@dimen/dp2"
+                    android:src="@drawable/ic_flip_vertical" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_delete" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#F4DED3" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginHorizontal="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp5"
+            tools:itemCount="20"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_layout_icon"
+            app:spanCount="6"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:id="@+id/rcy_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F4DED3" />
+    <HorizontalScrollView
+        android:id="@+id/bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:paddingVertical="@dimen/dp20"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/icon_bg"
+                android:layout_marginStart="@dimen/dp10"
+                android:layout_marginEnd="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_bg_choose" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_choose2" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_add" />
+            <ImageView
+                android:id="@+id/icon_eye"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+            <ImageView
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_age" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
