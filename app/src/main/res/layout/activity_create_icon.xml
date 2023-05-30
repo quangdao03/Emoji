@@ -14,9 +14,8 @@
     <RelativeLayout
         android:id="@+id/rl_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:background="#F4DED3"
-        android:paddingVertical="@dimen/dp20"
         app:layout_constraintBottom_toTopOf="@+id/rl_control"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,21 +24,22 @@
         <ImageView
             android:id="@+id/img_bg"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:src="@drawable/icon1bg" />
 
         <ImageView
             android:id="@+id/img_bg1"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/rl_image"
         android:id="@+id/rl_control"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +81,7 @@
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/delete"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_alignParentEnd="true"
@@ -150,20 +151,23 @@
                 android:layout_height="28dp"
                 android:src="@drawable/ic_age" />
             <ImageView
+                android:id="@+id/icon_eyebrow"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_eyebrow" />
             <ImageView
+                android:id="@+id/icon_mouth"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_mouth" />
             <ImageView
+                android:id="@+id/icon_addition"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_addition" />
             <ImageView
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"

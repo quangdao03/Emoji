@@ -1,14 +1,20 @@
 package com.example.emojitest;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,12 +42,20 @@ public class CreateIconActivity extends AppCompatActivity {
 
     ArrayList<Icon> iconArrayList = new ArrayList<>();
     ArrayList<Icon> iconArrayList1 = new ArrayList<>();
+    ArrayList<Icon> iconArrayListEyeBrow = new ArrayList<>();
+    ArrayList<Icon> iconArrayListMouth = new ArrayList<>();
 
     ActivityCreateIconBinding binding;
     private StickerImageView sticker;
+    private StickerImageView sticker1;
+    private StickerImageView stickermouth;
     ArrayList<Integer> stickerviewId = new ArrayList<>();
     int view_id, flag = 0, flagVisibility = 0;
     View previousView = null;
+    View previousView1 = null;
+    View previousViewmouth = null;
+
+    private String delete  = "";
 
 
     @Override
@@ -52,6 +66,8 @@ public class CreateIconActivity extends AppCompatActivity {
 
         iconArrayList = listSticker1("icon", "icon/", iconArrayList);
         iconArrayList1 = listSticker1("icon_eye", "icon_eye/", iconArrayList1);
+        iconArrayListEyeBrow = listSticker1("eye_brow", "eye_brow/", iconArrayListEyeBrow);
+        iconArrayListMouth = listSticker1("mouth", "mouth/", iconArrayListMouth);
         back = findViewById(R.id.back);
         rcy_icon = findViewById(R.id.rcy_icon);
         img_bg = findViewById(R.id.img_bg);
@@ -72,19 +88,140 @@ public class CreateIconActivity extends AppCompatActivity {
 
     private void onclickItem() {
         binding.iconEye.setOnClickListener(v -> {
-//            if (iconArrayList1 != null) {
-//                iconArrayList1.clear();
-//
-//            }
             getIconEye();
+            delete = "eye";
         });
         binding.iconBg.setOnClickListener(v -> {
-//            if (iconArrayList != null) {
-//                iconArrayList.clear();
-//
-//            }
             getIcon();
         });
+        binding.iconEyebrow.setOnClickListener(v -> {
+            getEyeBrow();
+            delete = "eye_brow";
+
+        });
+        binding.iconMouth.setOnClickListener(v -> {
+            getMouth();
+            delete = "mouth";
+        });
+        binding.iconAddition.setOnClickListener(v -> {
+            getAddition();
+        });
+        binding.delete.setOnClickListener(v -> {
+
+            if (delete.equals("eye")){
+                if (sticker.getParent() != null) {
+                    ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
+                    myCanvas.removeView(sticker);
+                }
+            }else if (delete.equals("eye_brow")){
+                if (sticker1.getParent() != null) {
+                    ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
+                    myCanvas.removeView(sticker1);
+                }
+            }else if (delete.equals("mouth")){
+                if (stickermouth.getParent() != null) {
+                    ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
+                    myCanvas.removeView(stickermouth);
+                }
+            }
+            else {
+                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getAddition() {
+
+    }
+
+    private void getMouth() {
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+
+                stickermouth = new StickerImageView(CreateIconActivity.this, onTouchSticker);
+                Glide.with(CreateIconActivity.this).asBitmap().load(Uri.parse(icon.getStickerpath())).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        stickermouth.setImageBitmap(resource);
+                    }
+                });
+                int size = convertDpToPixel(150, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,
+                        size
+                );
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp120);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
+                stickermouth.setLayoutParams(params);
+                Random r = new Random();
+                view_id = r.nextInt();
+                if (view_id < 0) {
+                    view_id = view_id - (view_id * 2);
+                }
+                if (previousViewmouth  != null) {
+                    binding.rlImage.removeView(previousViewmouth );
+                }
+                stickermouth.setId(view_id);
+                stickerviewId.add(view_id);
+                binding.rlImage.addView(stickermouth);
+                previousViewmouth = stickermouth;
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListMouth);
+    }
+
+    private void getEyeBrow() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+
+                sticker1 = new StickerImageView(CreateIconActivity.this, onTouchSticker);
+                Glide.with(CreateIconActivity.this).asBitmap().load(Uri.parse(icon.getStickerpath())).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        sticker1.setImageBitmap(resource);
+                    }
+                });
+
+                int size = convertDpToPixel(150, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,
+                        size
+                );
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp50);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
+                sticker1.setLayoutParams(params);
+                Random r = new Random();
+                view_id = r.nextInt();
+                if (view_id < 0) {
+                    view_id = view_id - (view_id * 2);
+                }
+                if (previousView1  != null) {
+                    binding.rlImage.removeView(previousView1 );
+                }
+                sticker1.setId(view_id);
+                stickerviewId.add(view_id);
+                binding.rlImage.addView(sticker1);
+                previousView1 = sticker1;
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListEyeBrow);
     }
 
     private void getIconEye() {
@@ -104,6 +241,12 @@ public class CreateIconActivity extends AppCompatActivity {
                         sticker.setImageBitmap(resource);
                     }
                 });
+                int size = convertDpToPixel(150, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,size
+                );
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                sticker.setLayoutParams(params);
                 Random r = new Random();
                 view_id = r.nextInt();
                 if (view_id < 0) {
@@ -175,6 +318,12 @@ public class CreateIconActivity extends AppCompatActivity {
             }
 
         }
+    }
+    private static int convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return (int) px;
     }
 
 }
