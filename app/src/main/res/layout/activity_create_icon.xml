@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/rl_image"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:background="#F4DED3"
         app:layout_constraintBottom_toTopOf="@+id/rl_control"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,15 +66,15 @@
 
                 <ImageView
                     android:id="@+id/flip_hozi"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_marginEnd="@dimen/dp20"
                     android:padding="@dimen/dp2"
                     android:src="@drawable/ic_flip_horizontal" />
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_toEndOf="@id/flip_hozi"
                     android:padding="@dimen/dp2"
                     android:src="@drawable/ic_flip_vertical" />
@@ -169,10 +169,11 @@
                 android:layout_height="28dp"
                 android:src="@drawable/ic_addition" />
             <ImageView
+                android:id="@+id/icon_nose"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_nose" />
             <ImageView
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"

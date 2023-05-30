@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dp15"
+    android:layout_marginHorizontal="@dimen/dp15">
+    <LinearLayout
+        android:paddingVertical="@dimen/dp20"
+        android:paddingHorizontal="@dimen/dp20"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:text="@string/add_text"
+            style="@style/TextViewBase"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textColorHint="#D7C3B8"
+            android:layout_marginTop="@dimen/dp15"
+            android:paddingStart="@dimen/dp10"
+            android:paddingVertical="@dimen/dp10"
+            android:hint="@string/your_text"
+            android:background="@drawable/bg_edit_text"
+            android:layout_width="match_parent"
+            style="@style/TextViewBase"
+            tools:ignore="RtlSymmetry" />
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp15"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:textColor="#988E90"
+                android:layout_marginEnd="@dimen/dp15"
+                android:background="@drawable/bg_button_cancel"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:text="@string/Cancel"
+                android:layout_width="0dp"
+                style="@style/TextViewBase"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ok"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_ok"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:text="@string/Ok"
+                android:layout_width="0dp"
+                style="@style/TextViewBase"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

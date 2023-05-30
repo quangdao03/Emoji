@@ -5,7 +5,7 @@
     <style name="TextViewBase">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/color_241912</item>
         <item name="android:textSize">@dimen/sp16</item>
     </style>
     <style name="NoActionBarSplash" parent="Theme.AppCompat.Light.NoActionBar">

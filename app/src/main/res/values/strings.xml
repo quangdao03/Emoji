@@ -7,4 +7,8 @@
     <string name="content1">Customize your own sticker using various items of every part on the face.</string>
     <string name="content2">Make a impressive emoji-message with special shapes, symbols, fonts and colors..</string>
     <string name="content3">Set your emoji on new scene by putting it in a relatable background. </string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="add_text">Add text</string>
+    <string name="your_text">Your text here</string>
 </resources>
