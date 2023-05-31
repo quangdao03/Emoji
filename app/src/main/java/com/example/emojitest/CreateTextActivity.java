@@ -1,7 +1,9 @@
 package com.example.emojitest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
@@ -26,13 +28,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.emojitest.adapter.BackgroundAdapter;
+import com.example.emojitest.adapter.ColorCodeAdapter;
 import com.example.emojitest.adapter.IconAdapter;
 import com.example.emojitest.databinding.ActivityCreateTextBinding;
 import com.example.emojitest.model.Background;
 import com.example.emojitest.model.Icon;
+import com.example.emojitest.model.ObjColorCodeNeon;
 import com.example.emojitest.stickerviewclass.StickerImageView;
 import com.example.emojitest.textclass.TextImageView;
 import com.example.emojitest.textclass.TextStickerView;
+import com.example.emojitest.util.ColorList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,11 +49,13 @@ public class CreateTextActivity extends AppCompatActivity {
     RecyclerView rcy_bg;
     com.example.emojitest.adapter.BackgroundAdapter BackgroundAdapter;
     ArrayList<Background> backgroundList = new ArrayList<>();
+    ArrayList<ObjColorCodeNeon> objColorCodes = new ArrayList<>();
     ActivityCreateTextBinding binding;
     ArrayList<Integer> stickerviewId = new ArrayList<>();
     public static Bitmap editTextBitmap;
     EditText edit_text;
     ImageView back;
+    ColorCodeAdapter colorCodeAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +66,46 @@ public class CreateTextActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         initView();
         getBackground();
+        objColorCodes = ColorList.ObjColorCodeList();
     }
 
     private void initView() {
         back.setOnClickListener(view -> {
             onBackPressed();
         });
+        binding.imgBackground.setOnClickListener(view -> {
+            rcy_bg.setVisibility(View.VISIBLE);
+            binding.rlTextControl.setVisibility(View.GONE);
+            binding.imgFontColor.setImageResource(R.drawable.ic_text);
+            binding.imgTextOk.setImageResource(R.drawable.ic_symbol);
+            binding.imgBackground.setImageResource(R.drawable.ic_message);
+            binding.igKeyboard.setImageResource(R.drawable.ic_keyboard);
+            getBackground();
+        });
+        binding.imgFontColor.setOnClickListener(view -> {
+            rcy_bg.setVisibility(View.GONE);
+            binding.rlTextControl.setVisibility(View.VISIBLE);
+            binding.imgFontColor.setImageResource(R.drawable.ic_text_yes);
+            binding.imgTextOk.setImageResource(R.drawable.ic_symbol);
+            binding.imgBackground.setImageResource(R.drawable.ic_selected_no);
+            binding.igKeyboard.setImageResource(R.drawable.ic_keyboard);
+            getColor();
+        });
+        binding.imgTextOk.setOnClickListener(view -> {
+            binding.rlTextControl.setVisibility(View.GONE);
+            rcy_bg.setVisibility(View.GONE);
+            binding.imgFontColor.setImageResource(R.drawable.ic_text);
+            binding.imgTextOk.setImageResource(R.drawable.ic_symbol_on);
+            binding.imgBackground.setImageResource(R.drawable.ic_selected_no);
+            binding.igKeyboard.setImageResource(R.drawable.ic_keyboard);
+        });
         binding.igKeyboard.setOnClickListener(view -> {
-            binding
+            binding.rlTextControl.setVisibility(View.GONE);
+            rcy_bg.setVisibility(View.VISIBLE);
+            binding.igKeyboard.setImageResource(R.drawable.ic_keyboard_on);
+            binding.imgTextOk.setImageResource(R.drawable.ic_symbol);
+            binding.imgFontColor.setImageResource(R.drawable.ic_text);
+            binding.imgBackground.setImageResource(R.drawable.ic_selected_no);
             Button cancel,ok;
             final Dialog dialog = new Dialog(CreateTextActivity.this);
             dialog.setContentView(R.layout.layout_dialog_text);
@@ -100,6 +139,7 @@ public class CreateTextActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
     private void getBackground() {
@@ -217,5 +257,20 @@ public class CreateTextActivity extends AppCompatActivity {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * (metrics.densityDpi / 160f);
         return (int) px;
+    }
+    private void getColor(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this, RecyclerView. HORIZONTAL, false);
+        binding.rcyColor.setLayoutManager (linearLayoutManager);
+        binding.rcyColor.setHasFixedSize(true);
+        colorCodeAdapter = new ColorCodeAdapter(CreateTextActivity.this, new ColorCodeAdapter.Interfacecolor() {
+
+            @Override
+            public void onClick(String colorpath) {
+//                edtText.setTextColor(Color.parseColor(colorpath));
+            }
+        });
+        binding.rcyColor.setItemAnimator(new DefaultItemAnimator());
+        binding.rcyColor.setAdapter(colorCodeAdapter);
+        colorCodeAdapter.addAll(objColorCodes);
     }
 }

@@ -74,6 +74,7 @@
             android:layout_height="1dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="visible"
             android:id="@+id/rcy_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,6 +90,80 @@
             app:spanCount="6"
             tools:itemCount="16"
             tools:listitem="@layout/item_bg" />
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_text_control"
+            android:layout_below="@id/view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rl_font_size"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/font_size"
+                    android:text="Font size"
+                    style="@style/TextViewBase"/>
+                <SeekBar
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/font_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_below="@id/rl_font_size"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="@dimen/dp5"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:textSize="@dimen/sp20"
+                    android:textColor="#84746A"
+                    android:textStyle="bold"
+                    android:id="@+id/text_color"
+                    android:text="Aa"
+                    style="@style/TextViewBase"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/rcy_color"
+                    android:layout_toEndOf="@id/text_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <View
+                android:id="@+id/view2"
+                android:background="#F4DED3"
+                android:layout_above="@+id/ln_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <LinearLayout
+                android:id="@+id/ln_bottom"
+                android:paddingVertical="@dimen/dp10"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_text_scale"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"/>
+                <ImageView
+                    android:src="@drawable/ic_style_font"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
