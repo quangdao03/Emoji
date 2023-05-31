@@ -26,18 +26,18 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarHome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".IntroScreenActivity"

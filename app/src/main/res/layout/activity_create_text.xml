@@ -20,12 +20,14 @@
         android:layout_height="0dp">
 
         <ImageView
+            android:id="@+id/image_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:src="@drawable/icon1" />
+            android:src="@drawable/icon2" />
     </RelativeLayout>
     <RelativeLayout
+        android:background="@color/white"
         android:id="@+id/rl_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,12 +35,14 @@
         android:layout_width="match_parent"
         android:layout_height="300dp">
         <LinearLayout
+            android:background="@color/white"
             android:id="@+id/ln_control"
             android:paddingVertical="@dimen/dp15"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/img_background"
                 android:layout_weight="1"
                 android:src="@drawable/ic_message"
                 android:layout_width="26dp"
@@ -50,11 +54,13 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"/>
             <ImageView
+                android:id="@+id/img_font_color"
                 android:layout_weight="1"
                 android:src="@drawable/ic_text"
                 android:layout_width="26dp"
                 android:layout_height="26dp"/>
             <ImageView
+                android:id="@+id/img_text_ok"
                 android:layout_weight="1"
                 android:src="@drawable/ic_symbol"
                 android:layout_width="26dp"

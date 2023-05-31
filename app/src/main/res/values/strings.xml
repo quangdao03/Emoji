@@ -11,4 +11,5 @@
     <string name="Cancel">Cancel</string>
     <string name="add_text">Add text</string>
     <string name="your_text">Your text here</string>
+    <string name="text_isemty">Text Is Not Found, Please Insert Text First.</string>
 </resources>
