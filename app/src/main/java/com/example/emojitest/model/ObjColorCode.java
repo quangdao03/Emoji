@@ -1,9 +1,9 @@
 package com.example.emojitest.model;
 
-public class ObjColorCodeNeon {
+public class ObjColorCode {
     public String strColor;
 
-    public ObjColorCodeNeon(String strColor) {
+    public ObjColorCode(String strColor) {
         this.strColor = strColor;
     }
 

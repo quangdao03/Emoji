@@ -108,12 +108,18 @@
                     android:text="Font size"
                     style="@style/TextViewBase"/>
                 <SeekBar
+                    android:progressDrawable="@drawable/see_bar_on"
+                    android:maxHeight="4dp"
+                    android:minHeight="4dp"
+                    android:progressTint="#DF6F00"
+                    android:id="@+id/see_bar"
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@id/font_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_color_text"
                 android:layout_below="@id/rl_font_size"
                 android:layout_marginTop="@dimen/dp20"
                 android:layout_marginHorizontal="@dimen/dp10"
@@ -137,6 +143,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_color_text_shadow"
+                android:layout_below="@id/rl_color_text"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginHorizontal="@dimen/dp10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="6"
+                    android:shadowColor="#481A00"
+                    android:padding="@dimen/dp5"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:textSize="@dimen/sp20"
+                    android:textColor="#FAEEEF"
+                    android:textStyle="bold"
+                    android:id="@+id/text_color_shadow"
+                    android:text="Aa"
+                    style="@style/TextViewBase"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/rcy_color_shadow"
+                    android:layout_toEndOf="@id/text_color_shadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
             <View
                 android:id="@+id/view2"
                 android:background="#F4DED3"
@@ -151,16 +186,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/choose_text"
                     android:src="@drawable/ic_text_scale"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="26dp"/>
                 <ImageView
+                    android:id="@+id/choose_font"
                     android:src="@drawable/ic_style_font"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"/>
-
+                    android:layout_height="26dp"/>
             </LinearLayout>
         </RelativeLayout>
 

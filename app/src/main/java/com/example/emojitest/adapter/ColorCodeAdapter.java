@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.emojitest.R;
-import com.example.emojitest.model.ObjColorCodeNeon;
+import com.example.emojitest.model.ObjColorCode;
 
 import java.util.ArrayList;
 
 public class ColorCodeAdapter extends RecyclerView.Adapter<ColorCodeAdapter.MyViewHolder> {
 
-    ArrayList<ObjColorCodeNeon> objColorCodes = new ArrayList<>();
+    ArrayList<ObjColorCode> objColorCodes = new ArrayList<>();
     Context context;
     Interfacecolor interfacecolor;
     private int selectedPosition = -1;
@@ -87,7 +87,7 @@ public class ColorCodeAdapter extends RecyclerView.Adapter<ColorCodeAdapter.MyVi
         }
     }
 
-    public void addAll(ArrayList<ObjColorCodeNeon> data) {
+    public void addAll(ArrayList<ObjColorCode> data) {
         try {
             this.objColorCodes.clear();
             this.objColorCodes.addAll(data);

@@ -25,6 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatEditText
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="6"
+                android:shadowColor="#D7C3B8"
                 android:background="@null"
                 android:id="@+id/edit_text"
                 android:textColorHint="#D7C3B8"

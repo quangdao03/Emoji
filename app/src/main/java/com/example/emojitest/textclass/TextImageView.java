@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,5 +61,9 @@ public class TextImageView extends TextStickerView {
     public Bitmap getImageBitmap() {
         return ((BitmapDrawable) this.iv_main.getDrawable()).getBitmap();
     }
-
+    public void setImageColorFilter(int color) {
+        if (iv_main != null) {
+            iv_main.setColorFilter(color);
+        }
+    }
 }
