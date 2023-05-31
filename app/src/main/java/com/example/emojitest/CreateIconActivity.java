@@ -61,7 +61,7 @@ public class CreateIconActivity extends AppCompatActivity {
     View previousViewgesture = null;
     View previousViewnose = null;
 
-    private String delete  = "";
+    private String delete = "";
 
 
     @Override
@@ -120,29 +120,27 @@ public class CreateIconActivity extends AppCompatActivity {
         });
         binding.delete.setOnClickListener(v -> {
 
-            if (delete.equals("eye")){
+            if (delete.equals("eye")) {
                 if (sticker.getParent() != null) {
                     ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
                     myCanvas.removeView(sticker);
                 }
-            }else if (delete.equals("eye_brow")){
+            } else if (delete.equals("eye_brow")) {
                 if (sticker1.getParent() != null) {
                     ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
                     myCanvas.removeView(sticker1);
                 }
-            }else if (delete.equals("mouth")){
+            } else if (delete.equals("mouth")) {
                 if (stickermouth.getParent() != null) {
                     ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
                     myCanvas.removeView(stickermouth);
                 }
-            }
-            else if (delete.equals("gesture")){
+            } else if (delete.equals("gesture")) {
                 if (stickermouth.getParent() != null) {
                     ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
                     myCanvas.removeView(stickermouth);
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
             }
         });
@@ -179,8 +177,8 @@ public class CreateIconActivity extends AppCompatActivity {
                 if (view_id < 0) {
                     view_id = view_id - (view_id * 2);
                 }
-                if (previousViewnose  != null) {
-                    binding.rlImage.removeView(previousViewnose );
+                if (previousViewnose != null) {
+                    binding.rlImage.removeView(previousViewnose);
                 }
                 stickernose.setId(view_id);
                 stickerviewId.add(view_id);
@@ -223,8 +221,8 @@ public class CreateIconActivity extends AppCompatActivity {
                 if (view_id < 0) {
                     view_id = view_id - (view_id * 2);
                 }
-                if (previousViewgesture  != null) {
-                    binding.rlImage.removeView(previousViewgesture );
+                if (previousViewgesture != null) {
+                    binding.rlImage.removeView(previousViewgesture);
                 }
                 stickergesture.setId(view_id);
                 stickerviewId.add(view_id);
@@ -268,8 +266,8 @@ public class CreateIconActivity extends AppCompatActivity {
                 if (view_id < 0) {
                     view_id = view_id - (view_id * 2);
                 }
-                if (previousViewmouth  != null) {
-                    binding.rlImage.removeView(previousViewmouth );
+                if (previousViewmouth != null) {
+                    binding.rlImage.removeView(previousViewmouth);
                 }
                 stickermouth.setId(view_id);
                 stickerviewId.add(view_id);
@@ -313,8 +311,8 @@ public class CreateIconActivity extends AppCompatActivity {
                 if (view_id < 0) {
                     view_id = view_id - (view_id * 2);
                 }
-                if (previousView1  != null) {
-                    binding.rlImage.removeView(previousView1 );
+                if (previousView1 != null) {
+                    binding.rlImage.removeView(previousView1);
                 }
                 sticker1.setId(view_id);
                 stickerviewId.add(view_id);
@@ -345,7 +343,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 int size = convertDpToPixel(200, CreateIconActivity.this);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,size
+                        size, size
                 );
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
@@ -356,8 +354,8 @@ public class CreateIconActivity extends AppCompatActivity {
                 if (view_id < 0) {
                     view_id = view_id - (view_id * 2);
                 }
-                if (previousView  != null) {
-                    binding.rlImage.removeView(previousView );
+                if (previousView != null) {
+                    binding.rlImage.removeView(previousView);
                 }
                 sticker.setId(view_id);
                 stickerviewId.add(view_id);
@@ -387,6 +385,7 @@ public class CreateIconActivity extends AppCompatActivity {
         iconAdapter.addAll(iconArrayList);
 
     }
+
     private StickerView.OnTouchSticker onTouchSticker = new StickerView.OnTouchSticker() {
         @Override
         public void onTouchedSticker(StickerView stickerImageView) {
@@ -394,6 +393,7 @@ public class CreateIconActivity extends AppCompatActivity {
             removeBorder();
         }
     };
+
     public ArrayList<Icon> listSticker1(String dirFrom, String path, ArrayList<Icon> emojiLists) {
 
         emojiLists = new ArrayList<>();
@@ -412,6 +412,7 @@ public class CreateIconActivity extends AppCompatActivity {
         }
         return emojiLists;
     }
+
     private void removeBorder() {
 
         for (int i = 0; i < stickerviewId.size(); i++) {
@@ -423,6 +424,7 @@ public class CreateIconActivity extends AppCompatActivity {
 
         }
     }
+
     private static int convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
