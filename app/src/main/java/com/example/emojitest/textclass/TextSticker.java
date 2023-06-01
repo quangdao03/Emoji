@@ -1,6 +1,7 @@
 package com.example.emojitest.textclass;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -57,6 +58,11 @@ public class TextSticker extends TextStickerView{
     public void setTextColor(int color) {
         if (tv_main != null) {
             tv_main.setTextColor(color);
+        }
+    }
+    public void setTypeface(Typeface typeface) {
+        if (tv_main != null) {
+            tv_main.setTypeface(typeface);
         }
     }
 
