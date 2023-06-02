@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:itemCount="16"
+        android:id="@+id/rcvListImg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp4"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:spanCount="4"
+        tools:listitem="@layout/item_my_creation" />
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/layoutNoPics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/dp200"
+            android:layout_height="@dimen/dp200"
+            android:layout_gravity="center"
+            android:src="@drawable/no_image" />
+
+        <TextView
+            android:id="@+id/txt_nopics"
+            style="@style/TextViewBase"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="@string/no_creation"
+            android:textColor="#5C5C5C"
+            android:textSize="@dimen/sp18" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

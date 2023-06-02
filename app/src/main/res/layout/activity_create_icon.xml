@@ -22,6 +22,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ImageView
+            android:padding="@dimen/dp50"
             android:id="@+id/img_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +37,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/rl_image"
         android:id="@+id/rl_control"
         android:layout_width="match_parent"
@@ -46,6 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/view">
 
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp10"
@@ -96,6 +99,7 @@
             android:layout_alignParentBottom="true"
             android:background="#F4DED3" />
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/white"
             android:layout_marginHorizontal="@dimen/dp10"
             android:layout_marginTop="@dimen/dp10"
             android:layout_marginBottom="@dimen/dp5"
@@ -124,6 +128,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:background="@color/white"
             android:paddingVertical="@dimen/dp20"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -134,13 +139,15 @@
                 android:layout_marginEnd="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_bg_choose" />
+                android:src="@drawable/ic_bg_choose_no" />
             <ImageView
+                android:id="@+id/icon_icon"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_choose2" />
             <ImageView
+                android:id="@+id/icon_add"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
@@ -176,25 +183,29 @@
                 android:layout_height="28dp"
                 android:src="@drawable/ic_nose" />
             <ImageView
+                android:id="@+id/icon_beard"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_beard" />
             <ImageView
+                android:id="@+id/icon_hair"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_hair" />
             <ImageView
+                android:id="@+id/icon_glass"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_glass" />
             <ImageView
+                android:id="@+id/icon_album"
                 android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_age" />
+                android:src="@drawable/ic_bg_album" />
         </LinearLayout>
     </HorizontalScrollView>
 

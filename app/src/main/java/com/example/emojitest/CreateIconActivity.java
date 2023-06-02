@@ -1,6 +1,7 @@
 package com.example.emojitest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -41,7 +42,7 @@ import java.util.Random;
 public class CreateIconActivity extends AppCompatActivity {
     RecyclerView rcy_icon;
     IconAdapter iconAdapter;
-    ImageView img_bg, back;
+    public static ImageView img_bg, back;
 
     ArrayList<Icon> iconArrayList = new ArrayList<>();
     ArrayList<Icon> iconArrayList1 = new ArrayList<>();
@@ -49,6 +50,10 @@ public class CreateIconActivity extends AppCompatActivity {
     ArrayList<Icon> iconArrayListMouth = new ArrayList<>();
     ArrayList<Icon> iconArrayListGesture = new ArrayList<>();
     ArrayList<Icon> iconArrayListNose = new ArrayList<>();
+    ArrayList<Icon> iconArrayListBread = new ArrayList<>();
+    ArrayList<Icon> iconArrayListHair = new ArrayList<>();
+    ArrayList<Icon> iconArrayListGlass = new ArrayList<>();
+    ArrayList<Icon> iconArrayListIcon = new ArrayList<>();
 
     ActivityCreateIconBinding binding;
     private StickerImageView sticker;
@@ -56,6 +61,10 @@ public class CreateIconActivity extends AppCompatActivity {
     private StickerImageView stickermouth;
     private StickerImageView stickergesture;
     private StickerImageView stickernose;
+    private StickerImageView stickerbread;
+    private StickerImageView stickerhair;
+    private StickerImageView stickerglass;
+    private StickerImageView stickericon;
     ArrayList<Integer> stickerviewId = new ArrayList<>();
     int view_id, flag = 0, flagVisibility = 0;
     View previousView = null;
@@ -63,6 +72,10 @@ public class CreateIconActivity extends AppCompatActivity {
     View previousViewmouth = null;
     View previousViewgesture = null;
     View previousViewnose = null;
+    View previousViewbread = null;
+    View previousViewhair = null;
+    View previousViewglass = null;
+    View previousViewicon = null;
 
     private String delete = "";
     View selectedView = null;
@@ -80,10 +93,15 @@ public class CreateIconActivity extends AppCompatActivity {
         iconArrayListMouth = listSticker1("mouth", "mouth/", iconArrayListMouth);
         iconArrayListGesture = listSticker1("gesture", "gesture/", iconArrayListGesture);
         iconArrayListNose = listSticker1("nose", "nose/", iconArrayListNose);
+        iconArrayListBread = listSticker1("bread", "bread/", iconArrayListBread);
+        iconArrayListHair = listSticker1("hair", "hair/", iconArrayListHair);
+        iconArrayListGlass = listSticker1("glass", "glass/", iconArrayListGlass);
+        iconArrayListIcon = listSticker1("icon_icon", "icon_icon/", iconArrayListIcon);
         back = findViewById(R.id.back);
         rcy_icon = findViewById(R.id.rcy_icon);
         img_bg = findViewById(R.id.img_bg);
         getIcon();
+        binding.iconBg.setImageResource(R.drawable.ic_bg_choose);
         onclickItem();
         back.setOnClickListener(view -> {
             onBackPressed();
@@ -99,28 +117,71 @@ public class CreateIconActivity extends AppCompatActivity {
 
     private void onclickItem() {
         binding.iconEye.setOnClickListener(v -> {
+            getDefaultIcon();
             getIconEye();
             delete = "eye";
+            binding.iconEye.setImageResource(R.drawable.ic_eye_selected);
         });
         binding.iconBg.setOnClickListener(v -> {
+            getDefaultIcon();
             getIcon();
+            binding.iconBg.setImageResource(R.drawable.ic_bg_choose);
         });
         binding.iconEyebrow.setOnClickListener(v -> {
+            getDefaultIcon();
             getEyeBrow();
             delete = "eye_brow";
-
+            binding.iconEyebrow.setImageResource(R.drawable.ic_eye_brow_selected);
         });
         binding.iconMouth.setOnClickListener(v -> {
+            getDefaultIcon();
             getMouth();
             delete = "mouth";
+            binding.iconMouth.setImageResource(R.drawable.ic_mouth_selected);
         });
         binding.iconAddition.setOnClickListener(v -> {
+            getDefaultIcon();
             delete = "gesture";
             getAddition();
+            binding.iconAddition.setImageResource(R.drawable.ic_addtion_selected);
         });
         binding.iconNose.setOnClickListener(view -> {
+            getDefaultIcon();
             delete = "nose";
             getNose();
+            binding.iconNose.setImageResource(R.drawable.ic_nose_selected);
+        });
+        binding.iconBeard.setOnClickListener(view -> {
+            getDefaultIcon();
+            getBread();
+            delete = "bread";
+            binding.iconBeard.setImageResource(R.drawable.ic_bread_selected);
+        });
+        binding.iconHair.setOnClickListener(view -> {
+            getDefaultIcon();
+            getHair();
+            delete = "hair";
+            binding.iconHair.setImageResource(R.drawable.ic_hair_selected);
+        });
+        binding.iconGlass.setOnClickListener(view -> {
+            getDefaultIcon();
+            getGlass();
+            delete = "glass";
+            binding.iconGlass.setImageResource(R.drawable.ic_glass_selected);
+        });
+        binding.iconAlbum.setOnClickListener(view -> {
+            getDefaultIcon();
+            binding.iconAlbum.setImageResource(R.drawable.ic_album_selected);
+        });
+        binding.iconIcon.setOnClickListener(view -> {
+            getDefaultIcon();
+            binding.iconIcon.setImageResource(R.drawable.ic_choose_selected);
+            getIconChoose();
+        });
+        binding.iconAdd.setOnClickListener(view -> {
+            getDefaultIcon();
+            binding.iconAdd.setImageResource(R.drawable.customize_face);
+            startActivity(new Intent(CreateIconActivity.this,CustomizeSmiley.class));
         });
         binding.delete.setOnClickListener(v -> {
 
@@ -170,6 +231,36 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
             }
+            else if (delete.equals("bread")){
+                if (stickerbread == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (stickerbread.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
+                        myCanvas.removeView(stickerbread);
+                    }
+                }
+            }
+            else if (delete.equals("hair")){
+                if (stickerbread == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (stickerbread.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
+                        myCanvas.removeView(stickerbread);
+                    }
+                }
+            }
+            else if (delete.equals("glass")){
+                if (stickerglass == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (stickerglass.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickerglass.getParent());
+                        myCanvas.removeView(stickerglass);
+                    }
+                }
+            }
             else {
                 Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
             }
@@ -189,6 +280,173 @@ public class CreateIconActivity extends AppCompatActivity {
             }
 
         });
+    }
+    private void getIconChoose(){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+                Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(img_bg);
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListIcon);
+    }
+    private void getGlass(){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+
+                stickerglass = new StickerImageView(CreateIconActivity.this, onTouchSticker);
+                Glide.with(CreateIconActivity.this).asBitmap().load(Uri.parse(icon.getStickerpath())).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        stickerglass.setImageBitmap(resource);
+                    }
+                });
+                int size = convertDpToPixel(200, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,
+                        size
+                );
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp48);
+                stickerglass.setLayoutParams(params);
+                Random r = new Random();
+                view_id = r.nextInt();
+                if (view_id < 0) {
+                    view_id = view_id - (view_id * 2);
+                }
+                if (previousViewglass != null) {
+                    binding.rlImage.removeView(previousViewglass);
+                }
+                stickerglass.setId(view_id);
+                stickerviewId.add(view_id);
+                binding.rlImage.addView(stickerglass);
+                previousViewglass = stickerglass;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickerglass.setOnTouchListener(multiTouchListener);
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListGlass);
+    }
+    private void getHair(){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+
+                stickerhair = new StickerImageView(CreateIconActivity.this, onTouchSticker);
+                Glide.with(CreateIconActivity.this).asBitmap().load(Uri.parse(icon.getStickerpath())).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        stickerhair.setImageBitmap(resource);
+                    }
+                });
+                int size = convertDpToPixel(150, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,
+                        size
+                );
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                stickerhair.setLayoutParams(params);
+                Random r = new Random();
+                view_id = r.nextInt();
+                if (view_id < 0) {
+                    view_id = view_id - (view_id * 2);
+                }
+                if (previousViewhair != null) {
+                    binding.rlImage.removeView(previousViewhair);
+                }
+                stickerhair.setId(view_id);
+                stickerviewId.add(view_id);
+                binding.rlImage.addView(stickerhair);
+                previousViewhair = stickerhair;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickerhair.setOnTouchListener(multiTouchListener);
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListHair);
+    }
+    private void getBread(){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
+
+        rcy_icon.setLayoutManager(gridLayoutManager);
+        rcy_icon.setHasFixedSize(true);
+
+        iconAdapter = new IconAdapter(CreateIconActivity.this, new IconAdapter.iClickListener() {
+            @Override
+            public void onClickItem(Icon icon) {
+
+                stickerbread = new StickerImageView(CreateIconActivity.this, onTouchSticker);
+                Glide.with(CreateIconActivity.this).asBitmap().load(Uri.parse(icon.getStickerpath())).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        stickerbread.setImageBitmap(resource);
+                    }
+                });
+                int size = convertDpToPixel(150, CreateIconActivity.this);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        size,
+                        size
+                );
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp100);
+                stickerbread.setLayoutParams(params);
+                Random r = new Random();
+                view_id = r.nextInt();
+                if (view_id < 0) {
+                    view_id = view_id - (view_id * 2);
+                }
+                if (previousViewbread != null) {
+                    binding.rlImage.removeView(previousViewbread);
+                }
+                stickerbread.setId(view_id);
+                stickerviewId.add(view_id);
+                binding.rlImage.addView(stickerbread);
+                previousViewbread = stickerbread;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickerbread.setOnTouchListener(multiTouchListener);
+            }
+        });
+        rcy_icon.setAdapter(iconAdapter);
+        iconAdapter.addAll(iconArrayListBread);
     }
 
     private void getNose() {
@@ -215,7 +473,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 );
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
-                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp100);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp120);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
                 stickernose.setLayoutParams(params);
                 Random r = new Random();
                 view_id = r.nextInt();
@@ -313,7 +571,7 @@ public class CreateIconActivity extends AppCompatActivity {
                         stickermouth.setImageBitmap(resource);
                     }
                 });
-                int size = convertDpToPixel(200, CreateIconActivity.this);
+                int size = convertDpToPixel(180, CreateIconActivity.this);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                         size,
                         size
@@ -373,7 +631,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 );
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
-                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp26);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp36);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
                 sticker1.setLayoutParams(params);
                 Random r = new Random();
                 view_id = r.nextInt();
@@ -425,7 +683,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 );
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
-                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp36);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
+                params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp48);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
                 sticker.setLayoutParams(params);
                 Random r = new Random();
                 view_id = r.nextInt();
@@ -465,6 +723,14 @@ public class CreateIconActivity extends AppCompatActivity {
             @Override
             public void onClickItem(Icon icon) {
                 Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(img_bg);
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                img_bg.setOnTouchListener(multiTouchListener);
             }
         });
 
@@ -527,4 +793,31 @@ public class CreateIconActivity extends AppCompatActivity {
         selectedView = view;
     }
 
+    private void getDefaultIcon() {
+        binding.iconBg.setImageResource(R.drawable.ic_bg_choose_no);
+        binding.iconIcon.setImageResource(R.drawable.ic_choose2);
+        binding.iconEye.setImageResource(R.drawable.ic_age);
+        binding.iconEyebrow.setImageResource(R.drawable.ic_eyebrow);
+        binding.iconMouth.setImageResource(R.drawable.ic_mouth);
+        binding.iconAddition.setImageResource(R.drawable.ic_addition);
+        binding.iconNose.setImageResource(R.drawable.ic_nose);
+        binding.iconBeard.setImageResource(R.drawable.ic_beard);
+        binding.iconHair.setImageResource(R.drawable.ic_hair);
+        binding.iconGlass.setImageResource(R.drawable.ic_glass);
+        binding.iconAlbum.setImageResource(R.drawable.ic_bg_album);
+        binding.iconAdd.setImageResource(R.drawable.ic_add);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final MultiTouchListener multiTouchListener = new MultiTouchListener();
+        multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+            @Override
+            public void OnTouch(int action) {
+                removeBorder();
+            }
+        });
+        img_bg.setOnTouchListener(multiTouchListener);
+    }
 }

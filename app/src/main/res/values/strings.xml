@@ -12,4 +12,6 @@
     <string name="add_text">Add text</string>
     <string name="your_text">Your text here</string>
     <string name="text_isemty">Text Is Not Found, Please Insert Text First.</string>
+    <string name="no_creation">No creation yet.</string>
+    <string name="cam_per">Camera permission is necessary...</string>
 </resources>
