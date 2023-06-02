@@ -194,7 +194,7 @@ public class CreateTextActivity extends AppCompatActivity {
             binding.seeBar.setMin(min);
         }
         binding.seeBar.setMax(max);
-        binding.seeBar.setProgress(20);
+        binding.seeBar.setProgress(16);
         final int minSize = convertDpToPixel(10, CreateTextActivity.this);
         final int maxSize = convertDpToPixel(50, CreateTextActivity.this);
         binding.seeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -25,11 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.emojitest.MultiTouchTool.MultiTouchListener;
+import com.example.emojitest.MultiTouchTool.SelectionListener;
 import com.example.emojitest.adapter.IconAdapter;
 import com.example.emojitest.databinding.ActivityCreateIconBinding;
 import com.example.emojitest.model.Icon;
 import com.example.emojitest.stickerviewclass.StickerImageView;
 import com.example.emojitest.stickerviewclass.StickerView;
+import com.example.emojitest.util.ViewState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import java.util.Random;
 public class CreateIconActivity extends AppCompatActivity {
     RecyclerView rcy_icon;
     IconAdapter iconAdapter;
-    ImageView img_bg, img_bg1, back;
+    ImageView img_bg, back;
 
     ArrayList<Icon> iconArrayList = new ArrayList<>();
     ArrayList<Icon> iconArrayList1 = new ArrayList<>();
@@ -62,6 +65,7 @@ public class CreateIconActivity extends AppCompatActivity {
     View previousViewnose = null;
 
     private String delete = "";
+    View selectedView = null;
 
 
     @Override
@@ -79,7 +83,6 @@ public class CreateIconActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         rcy_icon = findViewById(R.id.rcy_icon);
         img_bg = findViewById(R.id.img_bg);
-        img_bg1 = findViewById(R.id.img_bg1);
         getIcon();
         onclickItem();
         back.setOnClickListener(view -> {
@@ -116,33 +119,75 @@ public class CreateIconActivity extends AppCompatActivity {
             getAddition();
         });
         binding.iconNose.setOnClickListener(view -> {
+            delete = "nose";
             getNose();
         });
         binding.delete.setOnClickListener(v -> {
 
             if (delete.equals("eye")) {
-                if (sticker.getParent() != null) {
-                    ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
-                    myCanvas.removeView(sticker);
+                if (sticker == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (sticker.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
+                        myCanvas.removeView(sticker);
+                    }
                 }
             } else if (delete.equals("eye_brow")) {
-                if (sticker1.getParent() != null) {
-                    ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
-                    myCanvas.removeView(sticker1);
+                if (sticker1 == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (sticker1.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
+                        myCanvas.removeView(sticker1);
+                    }
                 }
             } else if (delete.equals("mouth")) {
-                if (stickermouth.getParent() != null) {
-                    ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
-                    myCanvas.removeView(stickermouth);
+                if(stickermouth == null) {
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (stickermouth.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
+                        myCanvas.removeView(stickermouth);
+                    }
                 }
             } else if (delete.equals("gesture")) {
-                if (stickermouth.getParent() != null) {
-                    ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
-                    myCanvas.removeView(stickermouth);
+                if (stickergesture == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (stickergesture.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickergesture.getParent());
+                        myCanvas.removeView(stickergesture);
+                    }
                 }
-            } else {
+            }else if (delete.equals("nose")){
+                if (stickernose == null){
+                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (stickernose.getParent() != null){
+                        ViewGroup myCanvas = ((ViewGroup) stickernose.getParent());
+                        myCanvas.removeView(stickernose);
+                    }
+                }
+            }
+            else {
                 Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
             }
+        });
+        binding.imgReset.setOnClickListener(view -> {
+            if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null){
+                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+            }else {
+//                if (sticker.getParent() != null && sticker1.getParent() != null){
+//                    ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
+//                    myCanvas.removeView(sticker);
+//                    ViewGroup myCanvas1 = ((ViewGroup) sticker1.getParent());
+//                    myCanvas1.removeView(sticker1);
+//                }
+                binding.rlImage.removeAllViews();
+
+            }
+
         });
     }
 
@@ -184,6 +229,14 @@ public class CreateIconActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlImage.addView(stickernose);
                 previousViewnose = stickernose;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickernose.setOnTouchListener(multiTouchListener);
             }
         });
         rcy_icon.setAdapter(iconAdapter);
@@ -228,6 +281,14 @@ public class CreateIconActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlImage.addView(stickergesture);
                 previousViewgesture = stickergesture;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickergesture.setOnTouchListener(multiTouchListener);
             }
         });
         rcy_icon.setAdapter(iconAdapter);
@@ -273,6 +334,14 @@ public class CreateIconActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlImage.addView(stickermouth);
                 previousViewmouth = stickermouth;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                stickermouth.setOnTouchListener(multiTouchListener);
             }
         });
         rcy_icon.setAdapter(iconAdapter);
@@ -318,6 +387,15 @@ public class CreateIconActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlImage.addView(sticker1);
                 previousView1 = sticker1;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                sticker1.setOnTouchListener(multiTouchListener);
+
             }
         });
         rcy_icon.setAdapter(iconAdapter);
@@ -361,10 +439,19 @@ public class CreateIconActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlImage.addView(sticker);
                 previousView = sticker;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                sticker.setOnTouchListener(multiTouchListener);
             }
         });
         rcy_icon.setAdapter(iconAdapter);
         iconAdapter.addAll(iconArrayList1);
+
     }
 
     private void getIcon() {
@@ -430,6 +517,14 @@ public class CreateIconActivity extends AppCompatActivity {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * (metrics.densityDpi / 160f);
         return (int) px;
+    }
+    public interface OnSpiralTouch {
+        void OnTouch(int action);
+    }
+    public void selectView(View view) {
+
+        ((ViewState) view.getTag()).selectionState = true;
+        selectedView = view;
     }
 
 }

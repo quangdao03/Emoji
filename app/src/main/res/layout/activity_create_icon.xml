@@ -28,8 +28,8 @@
             android:layout_centerInParent="true"
             android:src="@drawable/icon1bg" />
 
-        <ImageView
-            android:id="@+id/img_bg1"
+        <RelativeLayout
+            android:id="@+id/view_set"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true" />
@@ -52,6 +52,7 @@
             android:paddingVertical="@dimen/dp10">
 
             <ImageView
+                android:id="@+id/img_reset"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_alignParentStart="true"
