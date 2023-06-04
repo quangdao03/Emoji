@@ -1,9 +1,11 @@
 package com.example.emojitest.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +31,10 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder> {
         void onClickItem(Icon icon);
     }
 
-    public IconAdapter(Context context, iClickListener iClickListener) {
+    public IconAdapter(Context context, iClickListener iClickListener, int selectedPosition) {
         this.context = context;
         this.mClick = iClickListener;
+        this.selectedPosition = selectedPosition;
     }
 
     @NonNull
@@ -59,6 +62,10 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder> {
                 selectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
                 mClick.onClickItem(icon);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("selected_position", selectedPosition);
+                editor.apply();
             }
         });
     }

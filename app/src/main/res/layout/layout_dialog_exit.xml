@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp15"
+    app:cardCornerRadius="@dimen/dp15">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dp20"
+        android:paddingVertical="@dimen/dp20">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextViewBase"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_semibold_600"
+            android:text="@string/Exit"
+            android:textSize="@dimen/sp18" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextViewBase"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/dp10"
+            android:fontFamily="@font/poppins_regular_400"
+            android:text="@string/are_you"
+            android:textColor="@color/color_988E90"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel"
+                style="@style/TextViewBase"
+                android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_cancel"
+                android:fontFamily="@font/poppins_medium_500"
+                android:text="@string/Quit"
+                android:textAllCaps="false"
+                android:textColor="@color/color_988E90"
+                android:textSize="@dimen/sp16" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ok"
+                style="@style/TextViewBase"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_ok"
+                android:fontFamily="@font/poppins_medium_500"
+                android:text="@string/Stay"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

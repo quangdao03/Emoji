@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:fontFamily="@font/poppins_medium_500"
         android:id="@+id/tv_toolbar"
         style="@style/TextViewBase"
         android:layout_marginStart="@dimen/_10sdp"

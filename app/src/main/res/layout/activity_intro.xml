@@ -69,15 +69,15 @@
                     android:id="@+id/tv_title"
                     style="@style/TextViewBase"
                     android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_medium_500"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="Various Neon Frames"
                     android:textColor="#241912"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_regular_400"
                     android:layout_below="@+id/tv_title"
                     android:id="@+id/tv_content"
                     style="@style/TextViewBase"
@@ -150,13 +150,12 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:background="#DF6F00"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/poppins_medium_500"
                         android:gravity="center"
                         android:paddingHorizontal="24dp"
                         android:text="Get Started"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white" />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
         </RelativeLayout>

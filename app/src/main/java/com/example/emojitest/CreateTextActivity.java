@@ -88,7 +88,7 @@ public class CreateTextActivity extends AppCompatActivity {
 
     Bitmap bitmap;
     String path;
-    TextView tv_export;
+    TextView tv_export,tv_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +100,7 @@ public class CreateTextActivity extends AppCompatActivity {
         rcy_bg = findViewById(R.id.rcy_bg);
         tv_export = findViewById(R.id.tv_export);
         back = findViewById(R.id.back);
+        tv_toolbar = findViewById(R.id.tv_toolbar);
         initView();
         getBackground();
         getFont();
@@ -108,6 +109,7 @@ public class CreateTextActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        tv_toolbar.setText(getText(R.string.new_text));
         tv_export.setOnClickListener(view -> {
             new saveAndGo().execute(new Void[0]);
         });

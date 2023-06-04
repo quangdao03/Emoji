@@ -35,7 +35,37 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true" />
     </RelativeLayout>
-
+    <RelativeLayout
+        android:id="@+id/rl_seekbar"
+        android:visibility="gone"
+        android:background="#80000000"
+        android:paddingHorizontal="@dimen/dp10"
+        android:paddingVertical="@dimen/dp10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rl_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/dp5"
+            android:id="@+id/text_blur"
+            android:fontFamily="@font/poppins_medium_500"
+            android:textSize="@dimen/sp16"
+            android:text="Blur"
+            style="@style/TextViewBase"/>
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:progressDrawable="@drawable/see_bar_on"
+            android:progressTint="#DF6F00"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"
+            android:layout_marginHorizontal="@dimen/dp10"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/text_blur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
     <LinearLayout
         android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/rl_image"
@@ -99,6 +129,7 @@
             android:layout_alignParentBottom="true"
             android:background="#F4DED3" />
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:background="@color/white"
             android:layout_marginHorizontal="@dimen/dp10"
             android:layout_marginTop="@dimen/dp10"
@@ -112,7 +143,74 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"
+            android:background="@color/white"
+            tools:itemCount="6"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_background"
+            app:spanCount="3"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:id="@+id/rcy_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
+            android:id="@+id/color"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/color_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription"
+            app:layout_constraintBottom_toTopOf="@id/camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
+            android:layout_marginVertical="@dimen/dp10"
+            android:id="@+id/camera"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/cam_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription"
+            app:layout_constraintBottom_toTopOf="@id/album"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="invisible"
+            android:id="@+id/album"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/album_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription"
+            app:layout_constraintBottom_toTopOf="@id/add"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:layout_constraintBottom_toTopOf="@id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:id="@+id/add"
+            android:visibility="gone"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/add_float"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
     <View
         android:id="@+id/view"
         app:layout_constraintBottom_toTopOf="@id/bottom"

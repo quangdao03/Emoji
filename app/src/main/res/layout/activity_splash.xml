@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:textColor="#241912"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_medium_500"
         android:textSize="@dimen/_20ssp"
         android:text="Emoji Maker"
         android:layout_marginTop="@dimen/_20sdp"
@@ -41,6 +41,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:fontFamily="@font/poppins_regular_400"
         android:id="@+id/tv_load"
         style="@style/TextViewBase"
         android:layout_marginBottom="72dp"

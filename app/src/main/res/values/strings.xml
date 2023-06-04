@@ -14,4 +14,15 @@
     <string name="text_isemty">Text Is Not Found, Please Insert Text First.</string>
     <string name="no_creation">No creation yet.</string>
     <string name="cam_per">Camera permission is necessary...</string>
+    <string name="custom_smiley">Customize Smiley</string>
+    <string name="new_emoji">New Emoji</string>
+    <string name="new_text">New Text Style</string>
+    <string name="create">Create</string>
+    <string name="text">Text</string>
+    <string name="Emoji">Emoji</string>
+    <string name="Exit">Exit</string>
+    <string name="Quit">Quit</string>
+    <string name="Stay">Stay</string>
+    <string name="my_creation">My creation</string>
+    <string name="are_you">Are you sure you want to quit?</string>
 </resources>

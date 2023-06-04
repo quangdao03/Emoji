@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomizeSmiley">
+    tools:context=".CustomizeSmiley"
+    android:background="#F4DED3">
     <include
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         layout="@layout/toolbar_app"/>
     <RelativeLayout
+        android:layout_marginVertical="@dimen/dp50"
         android:id="@+id/rl_control"
         android:background="#F4DED3"
         app:layout_constraintBottom_toTopOf="@id/list_bottom"
@@ -28,14 +30,16 @@
             android:id="@+id/ig_custom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" />
 
     </RelativeLayout>
     <HorizontalScrollView
+        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/list_bottom"
-        app:layout_constraintBottom_toTopOf="@+id/ln_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -43,53 +47,69 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/face"
-                android:src="@drawable/face_frame_8"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frn1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/love"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/face_frame_7" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/frn2" />
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram6"
-                android:src="@drawable/face_frame_6"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram5"
-                android:src="@drawable/face_frame_5"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frn4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram4"
-                android:src="@drawable/face_frame_4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm5"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram3"
-                android:src="@drawable/face_frame_3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm6"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram2"
-                android:src="@drawable/face_frame_2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm7"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram1"
-                android:src="@drawable/face_frame_1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm9"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp10"
                 android:id="@+id/fram"
-                android:src="@drawable/face_frame"
-                android:layout_width="120dp"
-                android:layout_height="120dp"/>
+                android:src="@drawable/frm8"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
         </LinearLayout>
     </HorizontalScrollView>
+    <View
+        android:id="@+id/view"
+        app:layout_constraintBottom_toTopOf="@id/ln_bottom"
+        android:background="#F4DED3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/ln_bottom"
         android:paddingHorizontal="@dimen/dp10"
         android:paddingVertical="@dimen/dp20"
