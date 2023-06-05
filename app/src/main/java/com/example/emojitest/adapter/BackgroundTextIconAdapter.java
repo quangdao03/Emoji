@@ -2,7 +2,6 @@ package com.example.emojitest.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.example.emojitest.CreateTextActivity;
 import com.example.emojitest.R;
 import com.example.emojitest.model.Background;
 
@@ -41,7 +39,7 @@ public class BackgroundTextIconAdapter extends RecyclerView.Adapter<BackgroundTe
         this.context = context;
         this.mClick = iClickListener;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        selectedPositiona = preferences.getString("a", "file:///android_asset/backgroundcolor/icon2.png");
+        selectedPositiona = preferences.getString("select_bg_create_text", "file:///android_asset/backgroundcolor/icon1.png");
 
 
     }
@@ -66,12 +64,6 @@ public class BackgroundTextIconAdapter extends RecyclerView.Adapter<BackgroundTe
 
             }
         });
-//        if (selectedPosition == position) {
-//            Drawable customDrawable = context.getResources().getDrawable(R.drawable.bg_image_selected);
-//            holder.itemView.setBackgroundDrawable(customDrawable);
-//        } else {
-//            holder.itemView.setBackgroundColor(Color.WHITE);
-//        }
         if (background == null) {
             return;
         }

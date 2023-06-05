@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.emojitest.R;
 import com.example.emojitest.adapter.SlideAdapter;
 
 

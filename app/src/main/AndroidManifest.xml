@@ -19,39 +19,70 @@
         android:theme="@style/Theme.EmojiTest">
         <activity
             android:theme="@style/NoActionBarSplash"
-            android:name=".ResultActivity"
+            android:name=".activity.MyCreationScreenActivity"
             android:exported="false" />
         <activity
             android:theme="@style/NoActionBarSplash"
-            android:name=".LoadImageScreenBGActivity"
+            android:name=".activity.ImageMyCreationScreenActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.SettingScreenActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.AboutScreenActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.LanguageScreenActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.LanguageStartScreenActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.ResultActivity"
+            android:exported="false" />
+        <activity
+            android:theme="@style/NoActionBarSplash"
+            android:name=".activity.LoadImageScreenBGActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:theme="@style/NoActionBarSplash"
-            android:name=".CustomizeSmiley"
+            android:name=".activity.CustomizeSmiley"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:theme="@style/NoActionBarSplash"
-            android:name=".LoadImageScreenActivity"
+            android:name=".activity.LoadImageScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CreateIconActivity"
+            android:name=".activity.CreateIconActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash" />
         <activity
-            android:name=".CreateTextActivity"
+            android:name=".activity.CreateTextActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarHome">
+
+        </activity>
+        <activity
+            android:name=".activity.SplashScreenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,14 +90,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarSplash">
-
-        </activity>
-        <activity
-            android:name=".IntroScreenActivity"
+            android:name=".activity.IntroScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash" />

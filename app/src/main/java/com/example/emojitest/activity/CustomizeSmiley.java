@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.emojitest.MultiTouchTool.MultiTouchListener;
+import com.example.emojitest.R;
 import com.example.emojitest.databinding.ActivityCustomizeSmileyBinding;
 
 public class CustomizeSmiley extends AppCompatActivity {

@@ -11,7 +11,7 @@ android {
         minSdk 21
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.github.QuadFlask:colorpicker:0.0.15'
     implementation 'jp.wasabeef:blurry:4.0.1'
     implementation 'com.airbnb.android:lottie:5.0.3'
+    implementation 'com.google.android.play:core:1.10.3'
 }

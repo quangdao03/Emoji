@@ -15,13 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.emojitest.CreateTextActivity;
 import com.example.emojitest.R;
 import com.example.emojitest.model.Background;
-import com.example.emojitest.model.Icon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.ViewHolder> {
     private Context context;
@@ -34,9 +31,10 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.Vi
         void onClickItem(Background background);
     }
 
-    public BackgroundAdapter(Context context,  BackgroundAdapter.iClickListener iClickListener) {
+    public BackgroundAdapter(Context context,  BackgroundAdapter.iClickListener iClickListener,int selectedPosition) {
         this.context = context;
         this.mClick = iClickListener;
+        this.selectedPosition = selectedPosition;
     }
 
     @NonNull
@@ -63,9 +61,13 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.Vi
             public void onClick(View view) {
                 selectedPosition = holder.getAdapterPosition();
                 mClick.onClickItem(background);
+                SharedPreferences preferences1 = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor1 = preferences1.edit();
+                editor1.putInt("select_background_text", selectedPosition);
+                editor1.apply();
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("a", backgroundList.get(position).getBg());
+                editor.putString("select_bg_create_text", backgroundList.get(position).getBg());
                 editor.apply();
                 notifyDataSetChanged();
             }

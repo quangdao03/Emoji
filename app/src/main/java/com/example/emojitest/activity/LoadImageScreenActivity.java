@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,15 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.emojitest.adapter.MyCreationAdapterBackground;
+import com.example.emojitest.R;
+import com.example.emojitest.adapter.MyCreationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoadImageScreenBGActivity extends AppCompatActivity {
+public class LoadImageScreenActivity extends AppCompatActivity {
 
     List<Uri> imageList = new ArrayList<>();
-    MyCreationAdapterBackground myCreationAdapterBackground;
+    MyCreationAdapter myCreationAdapter;
     RecyclerView rcvListImg;
     TextView tv_toolbar;
     ImageView back;
@@ -80,14 +81,13 @@ public class LoadImageScreenBGActivity extends AppCompatActivity {
         }
 
         // Hiển thị danh sách ảnh trên RecyclerView
-        myCreationAdapterBackground = new MyCreationAdapterBackground(this, imageList, new MyCreationAdapterBackground.OnClickImage() {
+        myCreationAdapter = new MyCreationAdapter(this, imageList, new MyCreationAdapter.OnClickImage() {
             @Override
             public void onClickImage(int pos) {
 
                 if (!isselected1) {
                     selectedPosition = pos;
-                    CreateIconActivity.rl_view.setImageURI(Uri.parse(imageList.get(pos).getPath()));
-                    CreateIconActivity.seekBar.setVisibility(View.VISIBLE);
+                    CustomizeSmiley.background.setImageURI(Uri.parse(imageList.get(pos).getPath()));
                     isselected1 = true;
                     finish();
                 }
@@ -96,7 +96,7 @@ public class LoadImageScreenBGActivity extends AppCompatActivity {
             }
         });
         Log.d("All", imageList.size() + "");
-        rcvListImg.setAdapter(myCreationAdapterBackground);
+        rcvListImg.setAdapter(myCreationAdapter);
         if (imageList.size() == 0) {
             findViewById(R.id.layoutNoPics).setVisibility(View.VISIBLE);
         } else {
@@ -112,7 +112,7 @@ public class LoadImageScreenBGActivity extends AppCompatActivity {
         getImage();
 
         // Cập nhật lại adapter trên RecyclerView
-        myCreationAdapterBackground.notifyDataSetChanged();
+        myCreationAdapter.notifyDataSetChanged();
     }
 
 
@@ -125,6 +125,7 @@ public class LoadImageScreenBGActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         //quay lai vi tri image da chon truoc do
         if (selectedPosition != -1) {
             rcvListImg.scrollToPosition(selectedPosition);

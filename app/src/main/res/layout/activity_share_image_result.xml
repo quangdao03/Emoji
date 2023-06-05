@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_bg">
+
+    <include
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    <View
+        android:layout_above="@id/ll_bot"
+        android:id="@+id/view"
+        android:background="#303038"
+        app:layout_constraintBottom_toTopOf="@+id/ll_bot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"/>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ll_bot"
+        android:gravity="center"
+        android:padding="@dimen/dp10"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnDelete"
+            android:layout_marginEnd="@dimen/dp50"
+            android:padding="@dimen/dp12"
+            android:src="@drawable/ic_delete"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"/>
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:id="@+id/btnShare"
+            android:padding="@dimen/dp12"
+            android:src="@drawable/share"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -26,7 +26,6 @@
         android:text="@string/app_name"
         android:textColor="@color/color_241912"
         android:textSize="@dimen/sp16"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="parent" />

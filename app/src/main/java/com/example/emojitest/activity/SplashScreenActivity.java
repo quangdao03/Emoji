@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.emojitest.R;
+import com.example.emojitest.util.SharePrefUtils;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -31,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, 4500);
 
-
+        SharePrefUtils.increaseCountOpenApp(SplashScreenActivity.this);
     }
 
     @Override
@@ -41,9 +43,13 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
     public void startAct() {
-
+        if (SharePrefUtils.getCountOpenFirstHelp(this) == 0) {
+            startActivity(new Intent(this, LanguageStartScreenActivity.class));
+            finish();
+        } else {
             startActivity(new Intent(this, IntroScreenActivity.class));
             finish();
+        }
 
     }
 

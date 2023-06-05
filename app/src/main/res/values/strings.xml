@@ -28,4 +28,22 @@
     <string name="are_you">Are you sure you want to quit?</string>
     <string name="are_you_reset">Are you sure want to reset your drawing?</string>
     <string name="choose">Choose Background color</string>
+    <string name="language">Language</string>
+    <string name="rate">Rate</string>
+    <string name="share">Share</string>
+    <string name="more_app">More App</string>
+    <string name="about">About</string>
+    <string name="setting">Setting</string>
+    <string name="Send_Email">Send Email</string>
+    <string name="There_is_no">There is no</string>
+    <string name="Thankyou">Thank you</string>
+    <string name="version">Version</string>
+    <string name="policy">Privacy Policy.</string>
+    <string name="opinion">Your opinion matter to us</string>
+    <string name="you_know">If you enjoy this Neon Photo Editor, would \nyou mind rating us on the Google Play, then?</string>
+    <string name="not_now">Not now</string>
+    <string name="thank_you">Thank you</string>
+    <string name="rate_us">Rate us</string>
+    <string name="one_delete">Once deleted can not be recovered.</string>
+    <string name="Delete">Delete</string>
 </resources>

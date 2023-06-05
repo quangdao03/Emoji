@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -26,7 +26,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -45,6 +44,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.emojitest.MultiTouchTool.MultiTouchListener;
+import com.example.emojitest.R;
 import com.example.emojitest.adapter.BackgroundAdapter;
 import com.example.emojitest.adapter.BackgroundTextIconAdapter;
 import com.example.emojitest.adapter.ColorCodeAdapter;
@@ -251,7 +251,10 @@ public class CreateTextActivity extends AppCompatActivity {
     }
 
     String a = "";
+
     private void getBackground() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int selectedPosition = preferences.getInt("select_background_text", -1);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 6, RecyclerView.VERTICAL, false);
         rcy_bg.setLayoutManager(linearLayoutManager);
         rcy_bg.setHasFixedSize(true);
@@ -261,7 +264,7 @@ public class CreateTextActivity extends AppCompatActivity {
                 Glide.with(CreateTextActivity.this).load(background.getBg()).into(binding.imageColor);
 
             }
-        });
+        },selectedPosition);
         rcy_bg.setAdapter(BackgroundAdapter);
         BackgroundAdapter.addAll(backgroundList);
     }

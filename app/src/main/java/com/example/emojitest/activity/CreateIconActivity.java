@@ -1,4 +1,4 @@
-package com.example.emojitest;
+package com.example.emojitest.activity;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -48,6 +48,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.emojitest.MultiTouchTool.MultiTouchListener;
+import com.example.emojitest.R;
 import com.example.emojitest.adapter.BackgroundIconAdapter;
 import com.example.emojitest.adapter.IconAdapter;
 import com.example.emojitest.adapter.IconAdditionAdapter;
@@ -332,18 +333,23 @@ public class CreateIconActivity extends AppCompatActivity {
         });
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Blurry.with(CreateIconActivity.this).radius(i).capture(rl_view).into(rl_view);
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int blurRadius = progress;
+                Blurry.with(CreateIconActivity.this)
+                        .radius(blurRadius)
+                        .capture(rl_view)
+                        .into(rl_view);
+                Log.d("process",""+progress);
+
+
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
         binding.rlImage.setOnTouchListener(new View.OnTouchListener() {
@@ -646,9 +652,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("mouth")) {
-                    if (stickermouth == null){
+                    if (stickermouth == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickermouth;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -658,9 +664,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("gesture")) {
-                    if (stickergesture == null){
+                    if (stickergesture == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickergesture;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -670,9 +676,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("nose")) {
-                    if (stickernose == null){
+                    if (stickernose == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickernose;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -682,9 +688,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("bread")) {
-                    if (stickerbread == null){
+                    if (stickerbread == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerbread;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -694,9 +700,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("hair")) {
-                    if (stickerhair == null){
+                    if (stickerhair == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerhair;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -706,9 +712,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("glass")) {
-                    if (stickerglass == null){
+                    if (stickerglass == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerglass;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -751,9 +757,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("mouth")) {
-                    if (stickermouth == null){
+                    if (stickermouth == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickermouth;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -763,9 +769,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("gesture")) {
-                    if (stickergesture == null){
+                    if (stickergesture == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickergesture;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -775,9 +781,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("nose")) {
-                    if (stickernose == null){
+                    if (stickernose == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickernose;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -787,9 +793,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("bread")) {
-                    if (stickerbread == null){
+                    if (stickerbread == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerbread;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -799,9 +805,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("hair")) {
-                    if (stickerhair == null){
+                    if (stickerhair == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerhair;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();
@@ -811,9 +817,9 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 }
                 if (delete.equals("glass")) {
-                    if (stickerglass == null){
+                    if (stickerglass == null) {
                         Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         View mainView = stickerglass;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
                         mainView.invalidate();

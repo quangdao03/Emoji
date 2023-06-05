@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.example.emojitest.CreateIconActivity;
+import com.example.emojitest.activity.CreateIconActivity;
 
 
 public class MultiTouchListener implements OnTouchListener {

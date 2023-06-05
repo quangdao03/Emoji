@@ -3,8 +3,6 @@ package com.example.emojitest.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -16,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.emojitest.CreateIconActivity;
+import com.example.emojitest.activity.CreateIconActivity;
 import com.example.emojitest.R;
 import com.example.emojitest.model.Icon;
 
@@ -60,7 +58,6 @@ public class BackgroundIconAdapter extends RecyclerView.Adapter<BackgroundIconAd
             @Override
             public void onClick(View v) {
                 selectedPosition = holder.getAdapterPosition();
-                notifyDataSetChanged();
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("selected_position_background", selectedPosition);
@@ -70,6 +67,7 @@ public class BackgroundIconAdapter extends RecyclerView.Adapter<BackgroundIconAd
                 }else {
                     mClick.onClickItem(icon);
                 }
+                notifyDataSetChanged();
             }
         });
     }

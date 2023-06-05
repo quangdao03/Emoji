@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:background="?android:attr/actionBarItemBackground"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:id="@+id/back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_left"
+            android:visibility="visible" />
+
+        <ImageView
+            android:background="?android:attr/actionBarItemBackground"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:id="@+id/cancel"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_left"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt"
+            style="@style/TextViewBase"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_medium_500"
+            android:gravity="center_vertical"
+            android:text="@string/my_creation"
+            android:textColor="@color/color_241912"
+            android:textSize="@dimen/sp16" />
+
+        <RelativeLayout
+            android:id="@+id/lyListOfImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:layout_toRightOf="@+id/txt"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:visibility="invisible"
+                android:id="@+id/ll_dele"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/clear_item"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/delete_item"
+                    />
+                <ImageView
+                    android:id="@+id/clear_all"
+                    android:visibility="gone"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/delete_item"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:visibility="invisible"
+                android:layout_toEndOf="@id/ll_dele"
+                android:id="@+id/ll_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginEnd="14dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/select_all"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/select_all"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/unselect_all"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/select_all_ok"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvListImg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp2"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:spanCount="4"
+        tools:itemCount="16"
+        tools:listitem="@layout/item_my_creation" />
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/layoutNoPics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp150"
+            android:layout_gravity="center"
+            android:src="@drawable/no_image" />
+
+        <TextView
+            android:id="@+id/txt_nopics"
+            style="@style/TextViewBase"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="@string/no_creation"
+            android:textColor="@color/color_241912"
+            android:textSize="@dimen/sp18" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
