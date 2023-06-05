@@ -18,17 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmojiTest">
         <activity
+            android:theme="@style/NoActionBarSplash"
             android:name=".ResultActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/NoActionBarSplash"
             android:name=".LoadImageScreenBGActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/NoActionBarSplash"
             android:name=".CustomizeSmiley"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/NoActionBarSplash"
             android:name=".LoadImageScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -66,6 +70,14 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
-
 </manifest>

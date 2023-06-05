@@ -1,41 +1,53 @@
 package com.example.emojitest;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.emojitest.MultiTouchTool.MultiTouchListener;
-import com.example.emojitest.MultiTouchTool.SelectionListener;
 import com.example.emojitest.adapter.BackgroundIconAdapter;
 import com.example.emojitest.adapter.IconAdapter;
 import com.example.emojitest.adapter.IconAdditionAdapter;
@@ -51,13 +63,24 @@ import com.example.emojitest.databinding.ActivityCreateIconBinding;
 import com.example.emojitest.model.Icon;
 import com.example.emojitest.stickerviewclass.StickerImageView;
 import com.example.emojitest.stickerviewclass.StickerView;
+import com.example.emojitest.util.SavingUtils;
 import com.example.emojitest.util.ViewState;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+
+import jp.wasabeef.blurry.Blurry;
 
 public class CreateIconActivity extends AppCompatActivity {
     RecyclerView rcy_icon;
@@ -112,18 +135,28 @@ public class CreateIconActivity extends AppCompatActivity {
     View selectedView = null;
     TextView tv_toolbar;
     Animation fabOpen, fabClose, rotateForward, rotateBackForWard;
-    FloatingActionButton fab,fab1,camera,color;
+    FloatingActionButton fab, fab1, camera, color;
     boolean isOpen = false;
     public static RelativeLayout rl_image;
-    public static boolean isCreateIconActivityActive = false;
-    boolean isCheck = false;
+    public static ImageView rl_view;
+    private static final int CAMERA_REQUEST_CODE = 101;
+    private static final int IMAGE_PICK_CAMERA_CODE = 102;
+    private String[] cameraPermissions;
+    Uri image_uri;
+    String path;
+    TextView tv_export;
+    Dialog dialog;
+    public static SeekBar seekBar;
+    int selectedPosition = -1;
+    boolean isFlipped = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateIconBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        isCreateIconActivityActive = true;
+        cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         iconArrayList = listSticker1("icon", "icon/", iconArrayList);
         iconArrayList1 = listSticker1("icon_eye", "icon_eye/", iconArrayList1);
         iconArrayListEyeBrow = listSticker1("eye_brow", "eye_brow/", iconArrayListEyeBrow);
@@ -136,10 +169,13 @@ public class CreateIconActivity extends AppCompatActivity {
         iconArrayListIcon = listSticker1("icon_icon", "icon_icon/", iconArrayListIcon);
         iconArrayListBackground = listSticker1("background_icon", "background_icon/", iconArrayListBackground);
         back = findViewById(R.id.back);
+        rl_view = findViewById(R.id.rl_view);
         rl_image = findViewById(R.id.rl_image);
+        seekBar = findViewById(R.id.seek_bar);
         tv_toolbar = findViewById(R.id.tv_toolbar);
         rcy_icon = findViewById(R.id.rcy_icon);
         img_bg = findViewById(R.id.img_bg);
+        tv_export = findViewById(R.id.tv_export);
         getIcon();
         binding.iconBg.setImageResource(R.drawable.ic_bg_choose);
         onclickItem();
@@ -149,10 +185,10 @@ public class CreateIconActivity extends AppCompatActivity {
         fab1 = (FloatingActionButton) findViewById(R.id.album);
         camera = (FloatingActionButton) findViewById(R.id.camera);
         color = (FloatingActionButton) findViewById(R.id.color);
-        fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
-        rotateForward = AnimationUtils.loadAnimation(this,R.anim.rotate_forward);
-        rotateBackForWard = AnimationUtils.loadAnimation(this,R.anim.rotate_backforward);
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
+        rotateBackForWard = AnimationUtils.loadAnimation(this, R.anim.rotate_backforward);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,22 +203,110 @@ public class CreateIconActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(CreateIconActivity.this, LoadImageScreenBGActivity.class));
                 animateFab();
-                isCheck = true;
             }
         });
+        camera.setOnClickListener(view -> {
+            if (checkCameraPermission()) {
+                ImagePickFromCamera();
+            } else {
+                requestCameraPermission();
+            }
+            animateFab();
+        });
+        color.setOnClickListener(view -> {
+            animateFab();
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            ColorPickerDialogBuilder.with(CreateIconActivity.this).setTitle(R.string.choose).wheelType(ColorPickerView.WHEEL_TYPE.FLOWER).density(12).initialColor(sharedPreferences.getInt("background_color", Color.WHITE)).setOnColorSelectedListener(new OnColorSelectedListener() {
+                @Override
+                public void onColorSelected(int selectedColor) {
+
+                }
+            }).setPositiveButton("" + getText(R.string.Ok), new ColorPickerClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                    Drawable drawable = new ColorDrawable(selectedColor);
+                    rl_view.setImageDrawable(drawable);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("background_color", selectedColor);
+                    editor.apply();
+                    binding.rlSeekbar.setVisibility(View.VISIBLE);
+                }
+            }).setNegativeButton("" + getText(R.string.Cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).build().show();
+        });
     }
-    private void animateFab(){
-        if (isOpen){
+
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
+    }
+
+    private void ImagePickFromCamera() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE, "Temp_Image Title");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image Description");
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+
+            case CAMERA_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (cameraAccepted && storageAccepted) {
+                        ImagePickFromCamera();
+                    } else {
+                        Toast.makeText(this, "" + getText(R.string.cam_per), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_CAMERA_CODE) {
+                rl_view.setImageURI(image_uri);
+                binding.rlSeekbar.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void animateFab() {
+        if (isOpen) {
             fab.startAnimation(rotateBackForWard);
             fab1.startAnimation(fabClose);
             camera.startAnimation(fabClose);
             color.startAnimation(fabClose);
             fab1.setClickable(false);
+            camera.setClickable(false);
+            color.setClickable(false);
             isOpen = false;
             fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
             fab.setImageResource(R.drawable.add_float);
-        }
-        else {
+        } else {
             fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.color_DE3730)));
             fab.setImageResource(R.drawable.add_float_white);
             fab.startAnimation(rotateForward);
@@ -190,15 +314,37 @@ public class CreateIconActivity extends AppCompatActivity {
             camera.startAnimation(fabOpen);
             color.startAnimation(fabOpen);
             fab1.setClickable(true);
+            camera.setClickable(true);
+            color.setClickable(true);
             isOpen = true;
         }
     }
 
+
     private void onclickItem() {
+        tv_export.setOnClickListener(view -> {
+            new saveAndGo().execute(new Void[0]);
+        });
         tv_toolbar.setText(getText(R.string.new_emoji));
         back.setOnClickListener(view -> {
             onBackPressed();
             finish();
+        });
+        binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Blurry.with(CreateIconActivity.this).radius(i).capture(rl_view).into(rl_view);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
         });
         binding.rlImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -210,7 +356,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconEye.setOnClickListener(v -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getIconEye();
             delete = "eye";
@@ -220,7 +366,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconBg.setOnClickListener(v -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getIcon();
             binding.iconBg.setImageResource(R.drawable.ic_bg_choose);
@@ -229,7 +375,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconEyebrow.setOnClickListener(v -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            binding.add.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getEyeBrow();
             delete = "eye_brow";
@@ -239,7 +385,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconMouth.setOnClickListener(v -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getMouth();
             delete = "mouth";
@@ -249,7 +395,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconAddition.setOnClickListener(v -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             delete = "gesture";
             getAddition();
@@ -259,7 +405,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconNose.setOnClickListener(view -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             delete = "nose";
             getNose();
@@ -269,7 +415,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconBeard.setOnClickListener(view -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getBread();
             delete = "bread";
@@ -279,7 +425,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconHair.setOnClickListener(view -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getHair();
             delete = "hair";
@@ -289,7 +435,7 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconGlass.setOnClickListener(view -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             getGlass();
             delete = "glass";
@@ -303,15 +449,14 @@ public class CreateIconActivity extends AppCompatActivity {
             getDefaultIcon();
             binding.iconAlbum.setImageResource(R.drawable.ic_album_selected);
             getBackground();
-            fab.setVisibility(View.VISIBLE);
-            binding.rlSeekbar.setVisibility(View.VISIBLE);
+            binding.lnFab.setVisibility(View.VISIBLE);
             Drawable thumb1 = ContextCompat.getDrawable(this, R.drawable.ic_seek_bar);
             binding.seekBar.setThumb(thumb1);
         });
         binding.iconIcon.setOnClickListener(view -> {
             binding.rcyIcon.setVisibility(View.VISIBLE);
             binding.rcyBackground.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            binding.lnFab.setVisibility(View.GONE);
             getDefaultIcon();
             binding.iconIcon.setImageResource(R.drawable.ic_choose_selected);
             getIconChoose();
@@ -322,107 +467,366 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.iconAdd.setOnClickListener(view -> {
             getDefaultIcon();
             binding.iconAdd.setImageResource(R.drawable.customize_face);
-            startActivity(new Intent(CreateIconActivity.this,CustomizeSmiley.class));
+            startActivity(new Intent(CreateIconActivity.this, CustomizeSmiley.class));
         });
         binding.delete.setOnClickListener(v -> {
 
             if (delete.equals("eye")) {
-                if (sticker == null){
+                if (sticker == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (sticker.getParent() != null){
+                } else {
+                    if (sticker.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
                         myCanvas.removeView(sticker);
                     }
                 }
             } else if (delete.equals("eye_brow")) {
-                if (sticker1 == null){
+                if (sticker1 == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (sticker1.getParent() != null){
+                } else {
+                    if (sticker1.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
                         myCanvas.removeView(sticker1);
                     }
                 }
             } else if (delete.equals("mouth")) {
-                if(stickermouth == null) {
+                if (stickermouth == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else{
-                    if (stickermouth.getParent() != null){
+                } else {
+                    if (stickermouth.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
                         myCanvas.removeView(stickermouth);
                     }
                 }
             } else if (delete.equals("gesture")) {
-                if (stickergesture == null){
+                if (stickergesture == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (stickergesture.getParent() != null){
+                } else {
+                    if (stickergesture.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickergesture.getParent());
                         myCanvas.removeView(stickergesture);
                     }
                 }
-            }else if (delete.equals("nose")){
-                if (stickernose == null){
+            } else if (delete.equals("nose")) {
+                if (stickernose == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (stickernose.getParent() != null){
+                } else {
+                    if (stickernose.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickernose.getParent());
                         myCanvas.removeView(stickernose);
                     }
                 }
-            }
-            else if (delete.equals("bread")){
-                if (stickerbread == null){
+            } else if (delete.equals("bread")) {
+                if (stickerbread == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (stickerbread.getParent() != null){
+                } else {
+                    if (stickerbread.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
                         myCanvas.removeView(stickerbread);
                     }
                 }
-            }
-            else if (delete.equals("hair")){
-                if (stickerbread == null){
+            } else if (delete.equals("hair")) {
+                if (stickerbread == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (stickerbread.getParent() != null){
+                } else {
+                    if (stickerbread.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
                         myCanvas.removeView(stickerbread);
                     }
                 }
-            }
-            else if (delete.equals("glass")){
-                if (stickerglass == null){
+            } else if (delete.equals("glass")) {
+                if (stickerglass == null) {
                     Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (stickerglass.getParent() != null){
+                } else {
+                    if (stickerglass.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickerglass.getParent());
                         myCanvas.removeView(stickerglass);
                     }
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
             }
         });
         binding.imgReset.setOnClickListener(view -> {
-            if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null){
+            if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
                 Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
-            }else {
-//                if (sticker.getParent() != null && sticker1.getParent() != null){
-//                    ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
-//                    myCanvas.removeView(sticker);
-//                    ViewGroup myCanvas1 = ((ViewGroup) sticker1.getParent());
-//                    myCanvas1.removeView(sticker1);
-//                }
-                binding.rlImage.removeAllViews();
+            } else {
+                Button cancel, ok;
+                final Dialog dialog = new Dialog(CreateIconActivity.this);
+                dialog.setContentView(R.layout.layout_dialog_reset);
+                dialog.getWindow().setGravity(Gravity.CENTER);
+                dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                cancel = dialog.findViewById(R.id.cancel);
+                ok = dialog.findViewById(R.id.ok);
+                cancel.setOnClickListener(view1 -> {
+                    dialog.dismiss();
+                });
+                ok.setOnClickListener(view1 -> {
+                    if (sticker != null && sticker.getParent() != null) {
+                        ViewGroup myCanvas = (ViewGroup) sticker.getParent();
+                        myCanvas.removeView(sticker);
+                    }
+                    if (sticker1 != null && sticker1.getParent() != null) {
+                        ViewGroup myCanvas1 = (ViewGroup) sticker1.getParent();
+                        myCanvas1.removeView(sticker1);
+                    }
+                    if (stickermouth != null && stickermouth.getParent() != null) {
+                        ViewGroup myCanvas2 = (ViewGroup) stickermouth.getParent();
+                        myCanvas2.removeView(stickermouth);
+                    }
+                    if (stickernose != null && stickernose.getParent() != null) {
+                        ViewGroup myCanvas3 = (ViewGroup) stickernose.getParent();
+                        myCanvas3.removeView(stickernose);
+                    }
+                    if (stickergesture != null && stickergesture.getParent() != null) {
+                        ViewGroup myCanvas4 = (ViewGroup) stickergesture.getParent();
+                        myCanvas4.removeView(stickergesture);
+                    }
+                    if (stickerglass != null && stickerglass.getParent() != null) {
+                        ViewGroup myCanvas4 = (ViewGroup) stickerglass.getParent();
+                        myCanvas4.removeView(stickerglass);
+                    }
+                    if (stickerhair != null && stickerhair.getParent() != null) {
+                        ViewGroup myCanvas4 = (ViewGroup) stickerhair.getParent();
+                        myCanvas4.removeView(stickerhair);
+                    }
+                    if (stickerbread != null && stickerbread.getParent() != null) {
+                        ViewGroup myCanvas4 = (ViewGroup) stickerbread.getParent();
+                        myCanvas4.removeView(stickerbread);
+                    }
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("selected_position", selectedPosition);
+                    editor.putInt("selected_position_plan", selectedPosition);
+                    editor.putInt("selected_position_nose", selectedPosition);
+                    editor.putInt("selected_position_mouth", selectedPosition);
+                    editor.putInt("selected_position_hair", selectedPosition);
+                    editor.putInt("selected_position_glass", selectedPosition);
+                    editor.putInt("selected_position_eye", selectedPosition);
+                    editor.putInt("selected_position_brow", selectedPosition);
+                    editor.putInt("selected_position_bread", selectedPosition);
+                    editor.putInt("selected_position_addition", selectedPosition);
+                    editor.apply();
+                    dialog.dismiss();
+                });
+                dialog.show();
+            }
 
+
+        });
+        binding.flipHozi.setOnClickListener(view -> {
+            if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
+                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+            } else {
+                if (delete.equals("eye")) {
+                    if (sticker == null) {
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    } else {
+                        View mainView = sticker;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        sticker.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("eye_brow")) {
+                    if (sticker1 == null) {
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        View mainView = sticker1;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        sticker1.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("mouth")) {
+                    if (stickermouth == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickermouth;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickermouth.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("gesture")) {
+                    if (stickergesture == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickergesture;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickergesture.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("nose")) {
+                    if (stickernose == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickernose;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickernose.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("bread")) {
+                    if (stickerbread == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerbread;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerbread.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("hair")) {
+                    if (stickerhair == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerhair;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerhair.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("glass")) {
+                    if (stickerglass == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerglass;
+                        mainView.setRotationY(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerglass.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
             }
 
         });
+        binding.flipVertical.setOnClickListener(view -> {
+
+            if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
+                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+            } else {
+                if (delete.equals("eye")) {
+                    if (sticker == null) {
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    } else {
+                        View mainView = sticker;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        sticker.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("eye_brow")) {
+                    if (sticker1 == null) {
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        View mainView = sticker1;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        sticker1.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("mouth")) {
+                    if (stickermouth == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickermouth;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickermouth.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("gesture")) {
+                    if (stickergesture == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickergesture;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickergesture.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("nose")) {
+                    if (stickernose == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickernose;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickernose.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("bread")) {
+                    if (stickerbread == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerbread;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerbread.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("hair")) {
+                    if (stickerhair == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerhair;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerhair.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+                if (delete.equals("glass")) {
+                    if (stickerglass == null){
+                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                    }else {
+                        View mainView = stickerglass;
+                        mainView.setRotationX(isFlipped ? 0f : -180f);
+                        mainView.invalidate();
+                        stickerglass.requestLayout();
+
+                        isFlipped = !isFlipped;
+                    }
+                }
+            }
+        });
     }
-    private void getIconChoose(){
+
+    private void getIconChoose() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedPosition = preferences.getInt("selected_position_plan", -1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
@@ -435,12 +839,13 @@ public class CreateIconActivity extends AppCompatActivity {
             public void onClickItem(Icon icon) {
                 Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(img_bg);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconPlanAdapter);
         iconPlanAdapter.addAll(iconArrayListIcon);
         rcy_icon.scrollToPosition(selectedPosition);
     }
-    private void getGlass(){
+
+    private void getGlass() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedPosition = preferences.getInt("selected_position_glass", -1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
@@ -460,10 +865,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(200, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp48);
@@ -489,12 +891,13 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickerglass.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconGlassAdapter);
         iconGlassAdapter.addAll(iconArrayListGlass);
         rcy_icon.scrollToPosition(selectedPosition);
     }
-    private void getHair(){
+
+    private void getHair() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedPosition = preferences.getInt("selected_position_hair", -1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
@@ -514,10 +917,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(150, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 stickerhair.setLayoutParams(params);
@@ -542,12 +942,13 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickerhair.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconHairAdapter);
         iconHairAdapter.addAll(iconArrayListHair);
         rcy_icon.scrollToPosition(selectedPosition);
     }
-    private void getBread(){
+
+    private void getBread() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedPosition = preferences.getInt("selected_position_bread", -1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 6, GridLayoutManager.VERTICAL, false);
@@ -567,10 +968,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(150, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp100);
@@ -596,7 +994,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickerbread.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconBreadAdapter);
         iconBreadAdapter.addAll(iconArrayListBread);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -622,10 +1020,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(140, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp120);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
@@ -651,7 +1046,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickernose.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconNoseAdapter);
         iconNoseAdapter.addAll(iconArrayListNose);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -677,10 +1072,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(150, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp120);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
@@ -706,7 +1098,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickergesture.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconAdditionAdapter);
         iconAdditionAdapter.addAll(iconArrayListGesture);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -732,10 +1124,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(180, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp150);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
@@ -761,7 +1150,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 stickermouth.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconMouthAdapter);
         iconMouthAdapter.addAll(iconArrayListMouth);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -788,10 +1177,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
 
                 int size = convertDpToPixel(200, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size,
-                        size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);  // Đặt sticker ở giữa theo chiều ngang
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp36);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
@@ -818,7 +1204,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 sticker1.setOnTouchListener(multiTouchListener);
 
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconBrowAdapter);
         iconBrowAdapter.addAll(iconArrayListEyeBrow);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -844,9 +1230,7 @@ public class CreateIconActivity extends AppCompatActivity {
                     }
                 });
                 int size = convertDpToPixel(200, CreateIconActivity.this);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        size, size
-                );
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);  // Đặt sticker ở phía trên
                 params.topMargin = getResources().getDimensionPixelSize(R.dimen.dp48);  // Đặt khoảng cách topMargin bằng một nửa chiều cao ảnh
@@ -872,7 +1256,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 sticker.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_icon.setAdapter(iconEyeAdapter);
         iconEyeAdapter.addAll(iconArrayList1);
         rcy_icon.scrollToPosition(selectedPosition);
@@ -900,13 +1284,14 @@ public class CreateIconActivity extends AppCompatActivity {
                 });
                 img_bg.setOnTouchListener(multiTouchListener);
             }
-        },selectedPosition);
+        }, selectedPosition);
 
         rcy_icon.setAdapter(iconAdapter);
         iconAdapter.addAll(iconArrayList);
 
     }
-    private void getBackground(){
+
+    private void getBackground() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int selectedPosition = preferences.getInt("selected_position_background", -1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(CreateIconActivity.this, 3, GridLayoutManager.VERTICAL, false);
@@ -917,19 +1302,10 @@ public class CreateIconActivity extends AppCompatActivity {
         backgroundIconAdapter = new BackgroundIconAdapter(CreateIconActivity.this, new BackgroundIconAdapter.iClickListener() {
             @Override
             public void onClickItem(Icon icon) {
-                Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(new CustomTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        rl_image.setBackground(resource);
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-                });
+                Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(rl_view);
+                binding.rlSeekbar.setVisibility(View.VISIBLE);
             }
-        },selectedPosition);
+        }, selectedPosition);
 
         binding.rcyBackground.setAdapter(backgroundIconAdapter);
         backgroundIconAdapter.addAll(iconArrayListBackground);
@@ -980,9 +1356,11 @@ public class CreateIconActivity extends AppCompatActivity {
         float px = dp * (metrics.densityDpi / 160f);
         return (int) px;
     }
+
     public interface OnSpiralTouch {
         void OnTouch(int action);
     }
+
     public void selectView(View view) {
 
         ((ViewState) view.getTag()).selectionState = true;
@@ -1016,25 +1394,98 @@ public class CreateIconActivity extends AppCompatActivity {
         });
         img_bg.setOnTouchListener(multiTouchListener);
     }
-    public  void updateBackground(Uri imagePath) {
-        Glide.with(CreateIconActivity.this)
-                .load(imagePath)
-                .into(new CustomTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        rl_image.setBackground(resource);
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-                });
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isCreateIconActivityActive = false;
+    }
+
+    class saveAndGo extends AsyncTask<Void, Void, String> {
+
+        saveAndGo() {
+        }
+
+        protected void onPreExecute() {
+            dialog = new Dialog(CreateIconActivity.this);
+            dialog.setContentView(R.layout.dialogloading);
+            dialog.getWindow().setGravity(Gravity.CENTER);
+            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        protected String doInBackground(Void... dataArr) {
+
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            path = storeImage(viewToBitmap());
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+            goSave();
+        }
+
+
+    }
+
+    private void goSave() {
+        Intent intent = new Intent(CreateIconActivity.this, ResultActivity.class);
+        intent.putExtra("uri_path", path);
+        startActivity(intent);
+        finish();
+    }
+
+    private Bitmap viewToBitmap() {
+        Bitmap bitmap;
+        removeBorder();
+        bitmap = Bitmap.createBitmap(binding.rlImage.getWidth(), binding.rlImage.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        binding.rlImage.draw(canvas);
+        return bitmap;
+
+    }
+
+    private String storeImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.e("save",
+                    "Error creating media file, check storage permissions: ");
+            return null;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.e("save1", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("save2", "Error accessing file: " + e.getMessage());
+        }
+        return pictureFile.toString();
+    }
+
+    private File getOutputMediaFile() {
+        File mediaStorageDir = new File(SavingUtils.getAppDir() + "/" + getResources().getString(R.string.app_name));
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName = "Emoji_Maker-" + timeStamp + ".jpg";
+
+        // Kiểm tra xem file đã tồn tại chưa, nếu có thì thêm số đếm vào tên file
+        int count = 1;
+        while (new File(mediaStorageDir.getPath() + File.separator + mImageName).exists()) {
+            mImageName = "Emoji_Maker-" + timeStamp + "_" + count + ".jpg";
+            count++;
+        }
+
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
     }
 }

@@ -66,8 +66,7 @@ public class BackgroundIconAdapter extends RecyclerView.Adapter<BackgroundIconAd
                 editor.putInt("selected_position_background", selectedPosition);
                 editor.apply();
                 if (position == 0 ){
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.bg_none);
-                    CreateIconActivity.rl_image.setBackgroundDrawable(drawable);
+                    CreateIconActivity.rl_view.setImageResource(R.drawable.bg_none);
                 }else {
                     mClick.onClickItem(icon);
                 }

@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.rl_create_text).setOnClickListener(view -> {
+        findViewById(R.id.mcv_create_text).setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this,CreateTextActivity.class));
 
         });
-        findViewById(R.id.rl_create).setOnClickListener(v -> {
+        findViewById(R.id.ll_create).setOnClickListener(v -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("selected_position", selectedPosition);

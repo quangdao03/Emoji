@@ -18,6 +18,7 @@
             android:text="@string/add_text"
             style="@style/TextViewBase"/>
         <com.google.android.material.card.MaterialCardView
+            app:cardElevation="0dp"
             app:strokeColor="@color/white"
             android:layout_marginTop="@dimen/dp15"
             app:cardCornerRadius="@dimen/dp10"
@@ -39,6 +40,7 @@
                 style="@style/TextViewBase" />
         </com.google.android.material.card.MaterialCardView>
         <LinearLayout
+            android:layout_marginBottom="@dimen/dp2"
             android:layout_marginTop="@dimen/dp15"
             android:orientation="horizontal"
             android:layout_width="match_parent"

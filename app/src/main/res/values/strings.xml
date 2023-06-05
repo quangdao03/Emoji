@@ -21,8 +21,11 @@
     <string name="text">Text</string>
     <string name="Emoji">Emoji</string>
     <string name="Exit">Exit</string>
+    <string name="Reset">Reset</string>
     <string name="Quit">Quit</string>
     <string name="Stay">Stay</string>
     <string name="my_creation">My creation</string>
     <string name="are_you">Are you sure you want to quit?</string>
+    <string name="are_you_reset">Are you sure want to reset your drawing?</string>
+    <string name="choose">Choose Background color</string>
 </resources>

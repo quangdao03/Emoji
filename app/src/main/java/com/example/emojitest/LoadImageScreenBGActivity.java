@@ -1,14 +1,11 @@
 package com.example.emojitest;
 
-import static com.example.emojitest.CreateIconActivity.isCreateIconActivityActive;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,10 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.emojitest.adapter.MyCreationAdapter;
 import com.example.emojitest.adapter.MyCreationAdapterBackground;
 
 import java.util.ArrayList;
@@ -93,12 +86,8 @@ public class LoadImageScreenBGActivity extends AppCompatActivity {
 
                 if (!isselected1) {
                     selectedPosition = pos;
-                    if (isCreateIconActivityActive) {
-                        CreateIconActivity existingActivity = (CreateIconActivity) ActivityManager.getInstance().getActivity(CreateIconActivity.class);
-                        if (existingActivity != null) {
-                            existingActivity.updateBackground(Uri.parse(imageList.get(pos).getPath()));
-                        }
-                    }
+                    CreateIconActivity.rl_view.setImageURI(Uri.parse(imageList.get(pos).getPath()));
+                    CreateIconActivity.seekBar.setVisibility(View.VISIBLE);
                     isselected1 = true;
                     finish();
                 }

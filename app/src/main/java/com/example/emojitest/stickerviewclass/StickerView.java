@@ -349,20 +349,12 @@ public abstract class StickerView extends FrameLayout implements View.OnClickLis
     public void setControlItemsHidden(boolean isHidden) {
         if (isHidden) {
             iv_border.setVisibility(View.INVISIBLE);
-//            iv_scale.setVisibility(View.INVISIBLE);
-//            iv_delete.setVisibility(View.INVISIBLE);
-//            iv_flip.setVisibility(View.INVISIBLE);
+
         } else {
             iv_border.setVisibility(View.VISIBLE);
-//            iv_scale.setVisibility(View.VISIBLE);
-//            iv_delete.setVisibility(View.VISIBLE);
-//            iv_flip.setVisibility(View.VISIBLE);
         }
     }
 
-//    protected View getImageViewFlip() {
-//        return iv_flip;
-//    }
 
     protected void onScaling(boolean scaleUp) {
     }
@@ -394,21 +386,6 @@ public abstract class StickerView extends FrameLayout implements View.OnClickLis
             super.onDraw(canvas);
 
 
-//            LayoutParams params = (LayoutParams) this.getLayoutParams();
-//
-//            Log.v(TAG, "params.leftMargin: " + params.leftMargin);
-//
-//            Rect border = new Rect();
-//            border.left = this.getLeft() - params.leftMargin;
-//            border.top = this.getTop() - params.topMargin;
-//            border.right = this.getRight() - params.rightMargin;
-//            border.bottom = this.getBottom() - params.bottomMargin;
-//            Paint borderPaint = new Paint();
-//            borderPaint.setStrokeWidth(8);
-//            borderPaint.setColor(getResources().getColor(R.color.color_241912));
-//            borderPaint.setStyle(Paint.Style.STROKE);
-//            canvas.drawRect(border, borderPaint);
-
         }
     }
 
@@ -422,14 +399,10 @@ public abstract class StickerView extends FrameLayout implements View.OnClickLis
     public void setControlsVisibility(boolean isVisible) {
         if (!isVisible) {
             iv_border.setVisibility(View.GONE);
-//            iv_delete.setVisibility(View.GONE);
-//            iv_flip.setVisibility(View.GONE);
-//            iv_scale.setVisibility(View.GONE);
+
         } else {
             iv_border.setVisibility(View.VISIBLE);
-//            iv_delete.setVisibility(View.VISIBLE);
-//            iv_flip.setVisibility(View.VISIBLE);
-//            iv_scale.setVisibility(View.VISIBLE);
+
         }
 
     }

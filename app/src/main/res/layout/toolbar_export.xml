@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:includeFontPadding="false"
         android:id="@+id/tv_toolbar"
         style="@style/TextViewBase"
         android:layout_marginStart="@dimen/_10sdp"
@@ -30,6 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:includeFontPadding="false"
         android:layout_marginEnd="@dimen/_10sdp"
         android:id="@+id/tv_export"
         style="@style/TextViewBase"

@@ -3,6 +3,7 @@ package com.example.emojitest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,7 +44,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.emojitest.MultiTouchTool.MultiTouchListener;
 import com.example.emojitest.adapter.BackgroundAdapter;
+import com.example.emojitest.adapter.BackgroundTextIconAdapter;
 import com.example.emojitest.adapter.ColorCodeAdapter;
 import com.example.emojitest.adapter.FontAdapter;
 import com.example.emojitest.databinding.ActivityCreateTextBinding;
@@ -68,7 +72,8 @@ import java.util.Random;
 public class CreateTextActivity extends AppCompatActivity {
 
     RecyclerView rcy_bg;
-    com.example.emojitest.adapter.BackgroundAdapter BackgroundAdapter;
+    BackgroundAdapter BackgroundAdapter;
+    BackgroundTextIconAdapter backgroundTextIconAdapter;
     ArrayList<Background> backgroundList = new ArrayList<>();
     ArrayList<Background> textIconList = new ArrayList<>();
     ArrayList<ObjColorCode> objColorCodes = new ArrayList<>();
@@ -89,6 +94,7 @@ public class CreateTextActivity extends AppCompatActivity {
     Bitmap bitmap;
     String path;
     TextView tv_export,tv_toolbar;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,6 +250,7 @@ public class CreateTextActivity extends AppCompatActivity {
         });
     }
 
+    String a = "";
     private void getBackground() {
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 6, RecyclerView.VERTICAL, false);
         rcy_bg.setLayoutManager(linearLayoutManager);
@@ -252,6 +259,7 @@ public class CreateTextActivity extends AppCompatActivity {
             @Override
             public void onClickItem(Background background) {
                 Glide.with(CreateTextActivity.this).load(background.getBg()).into(binding.imageColor);
+
             }
         });
         rcy_bg.setAdapter(BackgroundAdapter);
@@ -458,7 +466,7 @@ public class CreateTextActivity extends AppCompatActivity {
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 6, RecyclerView.VERTICAL, false);
         binding.rcyTextIcon.setLayoutManager(linearLayoutManager);
         binding.rcyTextIcon.setHasFixedSize(true);
-        BackgroundAdapter = new BackgroundAdapter(this, new BackgroundAdapter.iClickListener() {
+        backgroundTextIconAdapter = new BackgroundTextIconAdapter(this, new BackgroundTextIconAdapter.iClickListener() {
             @Override
             public void onClickItem(Background background) {
                 sticker = new StickerImageView(CreateTextActivity.this, onTouchSticker);
@@ -468,7 +476,7 @@ public class CreateTextActivity extends AppCompatActivity {
                         sticker.setImageBitmap(resource);
                     }
                 });
-                int size = convertDpToPixel(100, CreateTextActivity.this);
+                int size = convertDpToPixel(200, CreateTextActivity.this);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                         size, size
                 );
@@ -486,10 +494,18 @@ public class CreateTextActivity extends AppCompatActivity {
                 stickerviewId.add(view_id);
                 binding.rlBg.addView(sticker);
                 previousView = sticker;
+                final MultiTouchListener multiTouchListener = new MultiTouchListener();
+                multiTouchListener.setOnSpiralTouch(new CreateIconActivity.OnSpiralTouch() {
+                    @Override
+                    public void OnTouch(int action) {
+                        removeBorder();
+                    }
+                });
+                sticker.setOnTouchListener(multiTouchListener);
             }
         });
-        binding.rcyTextIcon.setAdapter(BackgroundAdapter);
-        BackgroundAdapter.addAll(textIconList);
+        binding.rcyTextIcon.setAdapter(backgroundTextIconAdapter);
+        backgroundTextIconAdapter.addAll(textIconList);
     }
     class saveAndGo extends AsyncTask<Void, Void, String> {
 
@@ -497,15 +513,13 @@ public class CreateTextActivity extends AppCompatActivity {
         }
 
         protected void onPreExecute() {
-//            dialog = new Dialog(CreateTextActivity.this);
-//            dialog.setContentView(R.layout.layout_dialog_export);
-//            dialog.getWindow().setGravity(Gravity.CENTER);
-//            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            dialog.setCancelable(false);
-//            ProgressBar progressBar = dialog.findViewById(R.id.spin_kit);
-//            progressBar.setIndeterminateDrawable(new FadingCircle());
-//            dialog.show();
+            dialog = new Dialog(CreateTextActivity.this);
+            dialog.setContentView(R.layout.dialogloading);
+            dialog.getWindow().setGravity(Gravity.CENTER);
+            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         protected String doInBackground(Void... dataArr) {
@@ -522,8 +536,8 @@ public class CreateTextActivity extends AppCompatActivity {
 
     }
     private void goSave() {
-        Intent intent = new Intent(CreateTextActivity.this, MainActivity.class);
-        intent.putExtra("path", path);
+        Intent intent = new Intent(CreateTextActivity.this, ResultActivity.class);
+        intent.putExtra("uri_path", path);
         startActivity(intent);
         finish();
     }
@@ -578,4 +592,11 @@ public class CreateTextActivity extends AppCompatActivity {
         return mediaFile;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
 }
