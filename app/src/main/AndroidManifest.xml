@@ -21,6 +21,10 @@
             android:name=".ResultActivity"
             android:exported="false" />
         <activity
+            android:name=".LoadImageScreenBGActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".CustomizeSmiley"
             android:exported="false"
             android:screenOrientation="portrait" />

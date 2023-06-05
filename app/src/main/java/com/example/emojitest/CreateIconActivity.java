@@ -114,14 +114,16 @@ public class CreateIconActivity extends AppCompatActivity {
     Animation fabOpen, fabClose, rotateForward, rotateBackForWard;
     FloatingActionButton fab,fab1,camera,color;
     boolean isOpen = false;
-
+    public static RelativeLayout rl_image;
+    public static boolean isCreateIconActivityActive = false;
+    boolean isCheck = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateIconBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        isCreateIconActivityActive = true;
         iconArrayList = listSticker1("icon", "icon/", iconArrayList);
         iconArrayList1 = listSticker1("icon_eye", "icon_eye/", iconArrayList1);
         iconArrayListEyeBrow = listSticker1("eye_brow", "eye_brow/", iconArrayListEyeBrow);
@@ -134,6 +136,7 @@ public class CreateIconActivity extends AppCompatActivity {
         iconArrayListIcon = listSticker1("icon_icon", "icon_icon/", iconArrayListIcon);
         iconArrayListBackground = listSticker1("background_icon", "background_icon/", iconArrayListBackground);
         back = findViewById(R.id.back);
+        rl_image = findViewById(R.id.rl_image);
         tv_toolbar = findViewById(R.id.tv_toolbar);
         rcy_icon = findViewById(R.id.rcy_icon);
         img_bg = findViewById(R.id.img_bg);
@@ -154,13 +157,17 @@ public class CreateIconActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 animateFab();
+                fab1.setVisibility(View.VISIBLE);
+                camera.setVisibility(View.VISIBLE);
+                color.setVisibility(View.VISIBLE);
             }
         });
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(CreateIconActivity.this, LoadImageScreenBGActivity.class));
                 animateFab();
-
+                isCheck = true;
             }
         });
     }
@@ -910,11 +917,10 @@ public class CreateIconActivity extends AppCompatActivity {
         backgroundIconAdapter = new BackgroundIconAdapter(CreateIconActivity.this, new BackgroundIconAdapter.iClickListener() {
             @Override
             public void onClickItem(Icon icon) {
-                Uri uri = Uri.parse(icon.getStickerpath());
                 Glide.with(CreateIconActivity.this).load(Uri.parse(icon.getStickerpath())).into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        binding.rlImage.setBackground(resource);
+                        rl_image.setBackground(resource);
                     }
 
                     @Override
@@ -1009,5 +1015,26 @@ public class CreateIconActivity extends AppCompatActivity {
             }
         });
         img_bg.setOnTouchListener(multiTouchListener);
+    }
+    public  void updateBackground(Uri imagePath) {
+        Glide.with(CreateIconActivity.this)
+                .load(imagePath)
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        rl_image.setBackground(resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isCreateIconActivityActive = false;
     }
 }

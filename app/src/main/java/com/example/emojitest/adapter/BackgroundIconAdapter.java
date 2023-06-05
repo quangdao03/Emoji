@@ -1,5 +1,6 @@
 package com.example.emojitest.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.emojitest.CreateIconActivity;
 import com.example.emojitest.R;
 import com.example.emojitest.model.Icon;
 
@@ -46,7 +48,7 @@ public class BackgroundIconAdapter extends RecyclerView.Adapter<BackgroundIconAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Icon icon = iconList.get(position);
         if (selectedPosition == position) {
             holder.img_check.setVisibility(View.VISIBLE);
@@ -59,11 +61,16 @@ public class BackgroundIconAdapter extends RecyclerView.Adapter<BackgroundIconAd
             public void onClick(View v) {
                 selectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                mClick.onClickItem(icon);
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("selected_position_background", selectedPosition);
                 editor.apply();
+                if (position == 0 ){
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.bg_none);
+                    CreateIconActivity.rl_image.setBackgroundDrawable(drawable);
+                }else {
+                    mClick.onClickItem(icon);
+                }
             }
         });
     }
