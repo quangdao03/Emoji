@@ -18,30 +18,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmojiTest">
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.MyCreationScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.ImageMyCreationScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.SettingScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.AboutScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.LanguageScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.LanguageStartScreenActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarSplash"
             android:name=".activity.ResultActivity"
             android:exported="false" />
