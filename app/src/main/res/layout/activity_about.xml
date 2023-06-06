@@ -7,7 +7,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
     <androidx.appcompat.widget.AppCompatImageView
-        android:padding="@dimen/dp50"
+        android:padding="@dimen/dp30"
         android:id="@+id/ig_splash"
         android:layout_marginTop="@dimen/dp20"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/logo_app"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="200dp"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:textStyle="bold"
         android:letterSpacing="0.04"
@@ -41,7 +41,7 @@
     <TextView
         android:id="@+id/policy"
         style="@style/TextViewBase"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:letterSpacing="0.03"
         android:text="@string/policy"
         android:textColor="#DF6F00"

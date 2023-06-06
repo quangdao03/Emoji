@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/dp15"
-    android:layout_marginHorizontal="@dimen/dp15">
+    android:layout_marginHorizontal="@dimen/dp15"
+    app:cardCornerRadius="@dimen/dp15">
+
     <LinearLayout
-        android:paddingVertical="@dimen/dp20"
-        android:paddingHorizontal="@dimen/dp20"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dp20"
+        android:paddingVertical="@dimen/dp20">
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:textStyle="bold"
+            style="@style/TextViewBase"
             android:layout_gravity="center"
             android:text="@string/add_text"
-            style="@style/TextViewBase"/>
+            android:textStyle="bold" />
+
         <com.google.android.material.card.MaterialCardView
-            app:cardElevation="0dp"
-            app:strokeColor="@color/white"
-            android:layout_marginTop="@dimen/dp15"
-            app:cardCornerRadius="@dimen/dp10"
-            app:cardBackgroundColor="#FAEEEF"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            app:cardBackgroundColor="#FAEEEF"
+            app:cardCornerRadius="@dimen/dp10"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/white">
+
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_text"
+                style="@style/TextViewBase"
+                android:layout_width="match_parent"
+                android:background="@null"
+                android:hint="@string/your_text"
+                android:paddingVertical="@dimen/dp10"
+                android:paddingStart="@dimen/dp10"
+                android:shadowColor="#D7C3B8"
                 android:shadowDx="4"
                 android:shadowDy="4"
                 android:shadowRadius="6"
-                android:shadowColor="#D7C3B8"
-                android:background="@null"
-                android:id="@+id/edit_text"
-                android:textColorHint="#D7C3B8"
-                android:paddingStart="@dimen/dp10"
-                android:paddingVertical="@dimen/dp10"
-                android:hint="@string/your_text"
-                android:layout_width="match_parent"
-                style="@style/TextViewBase" />
+                android:textColorHint="#D7C3B8" />
         </com.google.android.material.card.MaterialCardView>
+
         <LinearLayout
-            android:layout_marginBottom="@dimen/dp2"
-            android:layout_marginTop="@dimen/dp15"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp2"
+            android:orientation="horizontal">
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancel"
-                android:textColor="#988E90"
-                android:layout_marginEnd="@dimen/dp15"
-                android:background="@drawable/bg_button_cancel"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:text="@string/Cancel"
+                style="@style/TextViewBase"
                 android:layout_width="0dp"
-                style="@style/TextViewBase"/>
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_cancel"
+                android:text="@string/Cancel"
+                android:textAllCaps="false"
+                android:textColor="#988E90" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ok"
-                android:textColor="@color/white"
-                android:background="@drawable/bg_button_ok"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:text="@string/Ok"
+                style="@style/TextViewBase"
                 android:layout_width="0dp"
-                style="@style/TextViewBase"/>
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_ok"
+                android:text="@string/Ok"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

@@ -59,12 +59,12 @@ public class IconEyeAdapter extends RecyclerView.Adapter<IconEyeAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 selectedPosition = holder.getAdapterPosition();
-                notifyDataSetChanged();
                 mClick.onClickItem(icon);
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("selected_position_eye", selectedPosition);
                 editor.apply();
+                notifyDataSetChanged();
             }
         });
     }

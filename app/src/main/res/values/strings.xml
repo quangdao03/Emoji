@@ -1,5 +1,6 @@
+
 <resources>
-    <string name="app_name">Emoji Maker</string>
+    <string name="app_name" translatable="false">Emoji Maker</string>
     <string name="this_action">This action may contain advertising.</string>
     <string name="title1">Make Emoji</string>
     <string name="title2">Create Text</string>
@@ -40,10 +41,18 @@
     <string name="version">Version</string>
     <string name="policy">Privacy Policy.</string>
     <string name="opinion">Your opinion matter to us</string>
-    <string name="you_know">If you enjoy this Neon Photo Editor, would \nyou mind rating us on the Google Play, then?</string>
+    <string name="you_know">If you enjoy this Emoji Maker, would \nyou mind rating us on the Google Play, then?</string>
     <string name="not_now">Not now</string>
     <string name="thank_you">Thank you</string>
     <string name="rate_us">Rate us</string>
     <string name="one_delete">Once deleted can not be recovered.</string>
     <string name="Delete">Delete</string>
+    <string name="please_select">Please select Icon to delete</string>
+    <string name="please_remove">Please add sticker to remove</string>
+    <string name="please_flip">Please add sticker to flip</string>
+    <string name="please_text">Please add text</string>
+    <string name="home">Home</string>
+    <string name="font_size">Font size</string>
+    <string name="Export">Export</string>
+    <string name="get_started">Get Started</string>
 </resources>

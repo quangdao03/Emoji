@@ -3,20 +3,19 @@
     android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <ImageView
-            android:layout_marginStart="@dimen/dp10"
             android:id="@+id/icLang"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp10"
             android:src="@drawable/ic_lang_en" />
 
         <TextView
@@ -31,16 +30,15 @@
             android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatRadioButton
-            android:layout_marginEnd="@dimen/dp10"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:button="@drawable/custom_radio_button"
             android:id="@+id/rdbCheck"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
-            android:checked="true"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp10"
+            android:button="@drawable/custom_radio_button"
+            android:checked="true" />
     </RelativeLayout>
 
     <View
@@ -48,5 +46,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="#EBE0E1"/>
+        android:background="#EBE0E1" />
 </LinearLayout>

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.emojitest.Language.Model.LanguageModel;
 import com.example.emojitest.R;
 import com.example.emojitest.adapter.LanguageAdapter;

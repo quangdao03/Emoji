@@ -1,8 +1,5 @@
 package com.example.emojitest.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,9 +7,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
 import com.bumptech.glide.Glide;
 import com.example.emojitest.R;
 import com.example.emojitest.databinding.ActivityResultBinding;
+import com.example.emojitest.util.SystemUtil;
 
 import java.io.File;
 
@@ -21,8 +22,10 @@ public class ResultActivity extends AppCompatActivity {
     TextView tv_toolbar;
     String path;
     ActivityResultBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -53,6 +56,7 @@ public class ResultActivity extends AppCompatActivity {
         });
 
     }
+
     String uri1 = "";
 
     private void shareFileImage(String path) {

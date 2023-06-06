@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F4DED3">
 
     <RelativeLayout
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +17,7 @@
         android:layout_height="?actionBarSize"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:background="?android:attr/actionBarItemBackground"
             android:layout_marginStart="@dimen/_10sdp"
             android:id="@+id/back"
@@ -25,7 +27,7 @@
             android:src="@drawable/ic_left"
             android:visibility="visible" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:background="?android:attr/actionBarItemBackground"
             android:layout_marginStart="@dimen/_10sdp"
             android:id="@+id/cancel"
@@ -66,14 +68,14 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
                 android:orientation="vertical">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/clear_item"
                     android:background="?android:attr/actionBarItemBackground"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/delete_item"
                     />
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/clear_all"
                     android:visibility="gone"
                     android:background="?android:attr/actionBarItemBackground"
@@ -92,14 +94,14 @@
                 android:layout_marginEnd="14dp"
                 android:orientation="vertical">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/select_all"
                     android:background="?android:attr/actionBarItemBackground"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/select_all"
                     />
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
                     android:id="@+id/unselect_all"
                     android:background="?android:attr/actionBarItemBackground"
@@ -114,6 +116,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/rcvListImg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -142,7 +145,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/dp150"
             android:layout_height="@dimen/dp150"
             android:layout_gravity="center"

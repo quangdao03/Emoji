@@ -4,53 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ResultActivity"
-    android:background="#F4DED3">
-    <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+    android:background="#F4DED3"
+    tools:context=".activity.ResultActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <RelativeLayout
-        android:layout_marginTop="@dimen/dp20"
         android:id="@+id/rl_image"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imag_result"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginHorizontal="@dimen/dp20"
-        app:layout_constraintTop_toBottomOf="@id/rl_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp20"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_image">
+
         <androidx.appcompat.widget.AppCompatButton
+            android:includeFontPadding="false"
             android:id="@+id/home"
-            android:layout_marginEnd="@dimen/dp20"
-            android:background="@drawable/bg_home_result"
             style="@style/TextViewBase"
-            android:fontFamily="@font/poppins_medium_500"
-            android:textColor="#BC5D00"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:text="Home"
-            android:layout_width="0dp" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/share"
-            android:fontFamily="@font/poppins_medium_500"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:background="@drawable/bg_button_ok"
-            android:layout_weight="1"
-            android:text="Share"
             android:layout_width="0dp"
-            style="@style/TextViewBase"/>
+            android:layout_marginEnd="@dimen/dp20"
+            android:layout_weight="1"
+            android:background="@drawable/bg_home_result"
+            android:fontFamily="@font/poppins_medium_500"
+            android:text="@string/home"
+            android:textAllCaps="false"
+            android:textColor="#BC5D00" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:includeFontPadding="false"
+            android:id="@+id/share"
+            style="@style/TextViewBase"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_ok"
+            android:fontFamily="@font/poppins_medium_500"
+            android:text="@string/share"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

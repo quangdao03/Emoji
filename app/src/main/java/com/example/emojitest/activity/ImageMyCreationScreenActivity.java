@@ -33,7 +33,6 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.example.emojitest.R;
 import com.example.emojitest.util.SystemUtil;
 
-
 import java.io.File;
 import java.util.ArrayList;
 

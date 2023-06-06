@@ -59,6 +59,7 @@ import com.example.emojitest.textclass.TextSticker;
 import com.example.emojitest.textclass.TextStickerView;
 import com.example.emojitest.util.ColorList;
 import com.example.emojitest.util.SavingUtils;
+import com.example.emojitest.util.SystemUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -93,11 +94,12 @@ public class CreateTextActivity extends AppCompatActivity {
 
     Bitmap bitmap;
     String path;
-    TextView tv_export,tv_toolbar;
+    TextView tv_export, tv_toolbar;
     Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityCreateTextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -209,7 +211,7 @@ public class CreateTextActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (textSticker == null) {
-                    Toast.makeText(CreateTextActivity.this, "please add text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateTextActivity.this, ""+getText(R.string.please_text), Toast.LENGTH_SHORT).show();
                 } else {
                     int initialProgress = seekBar.getProgress();
                     int size = minSize + (int) ((maxSize - minSize) * (float) initialProgress / seekBar.getMax());
@@ -250,7 +252,6 @@ public class CreateTextActivity extends AppCompatActivity {
         });
     }
 
-    String a = "";
 
     private void getBackground() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -264,7 +265,7 @@ public class CreateTextActivity extends AppCompatActivity {
                 Glide.with(CreateTextActivity.this).load(background.getBg()).into(binding.imageColor);
 
             }
-        },selectedPosition);
+        }, selectedPosition);
         rcy_bg.setAdapter(BackgroundAdapter);
         BackgroundAdapter.addAll(backgroundList);
     }
@@ -372,6 +373,7 @@ public class CreateTextActivity extends AppCompatActivity {
             removeBorder();
         }
     };
+
     private void removeBorder() {
 
         for (int i = 0; i < stickerviewId.size(); i++) {
@@ -380,7 +382,7 @@ public class CreateTextActivity extends AppCompatActivity {
                 TextStickerView textStickerView = (TextStickerView) view;
                 textStickerView.setControlItemsHidden(true);
             }
-            if (view instanceof StickerImageView){
+            if (view instanceof StickerImageView) {
                 StickerImageView stickerImageView = (StickerImageView) view;
                 stickerImageView.setControlItemsHidden(true);
             }
@@ -403,7 +405,7 @@ public class CreateTextActivity extends AppCompatActivity {
             @Override
             public void onClick(String colorpath) {
                 if (textSticker == null) {
-                    Toast.makeText(CreateTextActivity.this, "please add text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateTextActivity.this, ""+getText(R.string.please_text), Toast.LENGTH_SHORT).show();
                 } else {
                     textSticker.setTextColor(Color.parseColor(colorpath));
                 }
@@ -423,7 +425,7 @@ public class CreateTextActivity extends AppCompatActivity {
             @Override
             public void onClick(String colorpath) {
                 if (textSticker == null) {
-                    Toast.makeText(CreateTextActivity.this, "please add text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateTextActivity.this, ""+getText(R.string.please_text), Toast.LENGTH_SHORT).show();
                 } else {
                     textSticker.setShadowEffect(8, 4, 4, Color.parseColor(colorpath));
                 }
@@ -442,7 +444,7 @@ public class CreateTextActivity extends AppCompatActivity {
             @Override
             public void onClick(String fontpath) {
                 if (textSticker == null) {
-                    Toast.makeText(CreateTextActivity.this, "please add text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateTextActivity.this, ""+getText(R.string.please_text), Toast.LENGTH_SHORT).show();
                 } else {
                     textSticker.setTypeface(Typeface.createFromAsset(CreateTextActivity.this.getAssets(), fontpath));
                 }
@@ -510,6 +512,7 @@ public class CreateTextActivity extends AppCompatActivity {
         binding.rcyTextIcon.setAdapter(backgroundTextIconAdapter);
         backgroundTextIconAdapter.addAll(textIconList);
     }
+
     class saveAndGo extends AsyncTask<Void, Void, String> {
 
         saveAndGo() {
@@ -538,12 +541,14 @@ public class CreateTextActivity extends AppCompatActivity {
 
 
     }
+
     private void goSave() {
         Intent intent = new Intent(CreateTextActivity.this, ResultActivity.class);
         intent.putExtra("uri_path", path);
         startActivity(intent);
         finish();
     }
+
     private Bitmap viewToBitmap() {
         removeBorder();
         binding.rlBg.setBackgroundColor(Color.WHITE);
@@ -553,6 +558,7 @@ public class CreateTextActivity extends AppCompatActivity {
         return bitmap;
 
     }
+
     private String storeImage(Bitmap image) {
         File pictureFile = getOutputMediaFile();
         if (pictureFile == null) {
@@ -571,6 +577,7 @@ public class CreateTextActivity extends AppCompatActivity {
         }
         return pictureFile.toString();
     }
+
     private File getOutputMediaFile() {
         File mediaStorageDir = new File(SavingUtils.getAppDir() + "/" + getResources().getString(R.string.app_name));
 

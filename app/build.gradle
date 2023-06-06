@@ -12,10 +12,22 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        def formattedDate = new Date().format('MMM.dd.yyyy')
+        archivesBaseName = "Emoji_Maker_v${versionName}(${versionCode})_${formattedDate}"
     }
-
+    bundle {
+        density {
+            enableSplit true
+        }
+        abi {
+            enableSplit true
+        }
+        language {
+            enableSplit false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

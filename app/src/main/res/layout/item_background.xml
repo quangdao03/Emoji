@@ -3,26 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_item"
+        android:layout_width="160dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp3"
         android:layout_marginEnd="@dimen/dp3"
         android:scaleType="fitXY"
-        android:layout_gravity="center"
-        android:src="@drawable/bg1"
-        android:layout_width="160dp"
-        android:layout_height="100dp"/>
+        android:src="@drawable/bg1" />
+
     <androidx.appcompat.widget.AppCompatImageView
-        android:visibility="invisible"
         android:id="@+id/img_check"
-        android:padding="@dimen/dp40"
+        android:layout_width="160dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp3"
         android:layout_marginEnd="@dimen/dp3"
-        android:layout_gravity="center"
+        android:padding="@dimen/dp40"
         android:src="@drawable/check_circle"
-        android:layout_width="160dp"
-        android:layout_height="100dp"/>
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.emojitest.R;
 import com.example.emojitest.adapter.SlideAdapter;
+import com.example.emojitest.util.SystemUtil;
 
 
 public class IntroScreenActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class IntroScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         viewPager = findViewById(R.id.view_pager2);

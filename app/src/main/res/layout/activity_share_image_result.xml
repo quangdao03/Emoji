@@ -20,7 +20,7 @@
     <View
         android:layout_above="@id/ll_bot"
         android:id="@+id/view"
-        android:background="#303038"
+        android:background="#EBE0E1"
         app:layout_constraintBottom_toTopOf="@+id/ll_bot"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"/>

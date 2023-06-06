@@ -1,8 +1,6 @@
 package com.example.emojitest.activity;
 
 
-
-
 import static com.example.emojitest.activity.ImageMyCreationScreenActivity.getFilePathToMediaID;
 
 import android.Manifest;
@@ -39,7 +37,6 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.example.emojitest.R;
 import com.example.emojitest.adapter.MyCreationAdapterMyGallery;

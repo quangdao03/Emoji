@@ -29,7 +29,7 @@ public class SettingScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        SystemUtil.setLocale(this);
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         mapping();

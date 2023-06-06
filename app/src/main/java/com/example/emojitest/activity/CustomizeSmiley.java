@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import com.example.emojitest.MultiTouchTool.MultiTouchListener;
 import com.example.emojitest.R;
 import com.example.emojitest.databinding.ActivityCustomizeSmileyBinding;
+import com.example.emojitest.util.SystemUtil;
 
 public class CustomizeSmiley extends AppCompatActivity {
     ActivityCustomizeSmileyBinding binding;
@@ -38,6 +39,7 @@ public class CustomizeSmiley extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityCustomizeSmileyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -208,7 +210,7 @@ public class CustomizeSmiley extends AppCompatActivity {
 
     }
 
-    private void getDefault(){
+    private void getDefault() {
         binding.face.setBackgroundColor(Color.WHITE);
         binding.love.setBackgroundColor(Color.WHITE);
         binding.fram6.setBackgroundColor(Color.WHITE);

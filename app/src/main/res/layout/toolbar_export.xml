@@ -17,33 +17,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:includeFontPadding="false"
         android:id="@+id/tv_toolbar"
         style="@style/TextViewBase"
         android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium_500"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:text="@string/app_name"
         android:textColor="@color/color_241912"
         android:textSize="@dimen/sp16"
-        android:fontFamily="@font/poppins_medium_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:includeFontPadding="false"
-        android:layout_marginEnd="@dimen/_10sdp"
         android:id="@+id/tv_export"
         style="@style/TextViewBase"
         android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium_500"
         android:gravity="center"
-        android:text="Export"
+        android:includeFontPadding="false"
+        android:text="@string/Export"
         android:textColor="#DF6F00"
         android:textSize="@dimen/sp16"
-        android:fontFamily="@font/poppins_medium_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

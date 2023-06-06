@@ -65,6 +65,7 @@ import com.example.emojitest.model.Icon;
 import com.example.emojitest.stickerviewclass.StickerImageView;
 import com.example.emojitest.stickerviewclass.StickerView;
 import com.example.emojitest.util.SavingUtils;
+import com.example.emojitest.util.SystemUtil;
 import com.example.emojitest.util.ViewState;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
@@ -154,6 +155,7 @@ public class CreateIconActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityCreateIconBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -339,7 +341,7 @@ public class CreateIconActivity extends AppCompatActivity {
                         .radius(blurRadius)
                         .capture(rl_view)
                         .into(rl_view);
-                Log.d("process",""+progress);
+                Log.d("process", "" + progress);
 
 
             }
@@ -479,83 +481,116 @@ public class CreateIconActivity extends AppCompatActivity {
 
             if (delete.equals("eye")) {
                 if (sticker == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (sticker.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) sticker.getParent());
                         myCanvas.removeView(sticker);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_eye", -1);
+                        editor.apply();
+                        iconEyeAdapter.notifyDataSetChanged();
                     }
                 }
             } else if (delete.equals("eye_brow")) {
                 if (sticker1 == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (sticker1.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) sticker1.getParent());
                         myCanvas.removeView(sticker1);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_brow", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("mouth")) {
                 if (stickermouth == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (stickermouth.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickermouth.getParent());
                         myCanvas.removeView(stickermouth);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_mouth", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("gesture")) {
                 if (stickergesture == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (stickergesture.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickergesture.getParent());
                         myCanvas.removeView(stickergesture);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_addition", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("nose")) {
                 if (stickernose == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (stickernose.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickernose.getParent());
                         myCanvas.removeView(stickernose);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_nose", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("bread")) {
                 if (stickerbread == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (stickerbread.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
                         myCanvas.removeView(stickerbread);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_bread", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("hair")) {
-                if (stickerbread == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                if (stickerhair == null) {
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
-                    if (stickerbread.getParent() != null) {
-                        ViewGroup myCanvas = ((ViewGroup) stickerbread.getParent());
-                        myCanvas.removeView(stickerbread);
+                    if (stickerhair.getParent() != null) {
+                        ViewGroup myCanvas = ((ViewGroup) stickerhair.getParent());
+                        myCanvas.removeView(stickerhair);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_hair", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else if (delete.equals("glass")) {
                 if (stickerglass == null) {
-                    Toast.makeText(this, "Please select Icon to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+getText(R.string.please_select), Toast.LENGTH_SHORT).show();
                 } else {
                     if (stickerglass.getParent() != null) {
                         ViewGroup myCanvas = ((ViewGroup) stickerglass.getParent());
                         myCanvas.removeView(stickerglass);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateIconActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("selected_position_glass", selectedPosition);
+                        editor.apply();
                     }
                 }
             } else {
-                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ""+getText(R.string.please_remove), Toast.LENGTH_SHORT).show();
             }
         });
         binding.imgReset.setOnClickListener(view -> {
             if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
-                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ""+getText(R.string.please_remove), Toast.LENGTH_SHORT).show();
             } else {
                 Button cancel, ok;
                 final Dialog dialog = new Dialog(CreateIconActivity.this);
@@ -624,11 +659,11 @@ public class CreateIconActivity extends AppCompatActivity {
         });
         binding.flipHozi.setOnClickListener(view -> {
             if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
-                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ""+getText(R.string.please_remove), Toast.LENGTH_SHORT).show();
             } else {
                 if (delete.equals("eye")) {
                     if (sticker == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = sticker;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -640,7 +675,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("eye_brow")) {
                     if (sticker1 == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
 
                     } else {
                         View mainView = sticker1;
@@ -653,7 +688,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("mouth")) {
                     if (stickermouth == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickermouth;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -665,7 +700,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("gesture")) {
                     if (stickergesture == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickergesture;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -677,7 +712,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("nose")) {
                     if (stickernose == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickernose;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -689,7 +724,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("bread")) {
                     if (stickerbread == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerbread;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -701,7 +736,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("hair")) {
                     if (stickerhair == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerhair;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -713,7 +748,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("glass")) {
                     if (stickerglass == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerglass;
                         mainView.setRotationY(isFlipped ? 0f : -180f);
@@ -729,11 +764,11 @@ public class CreateIconActivity extends AppCompatActivity {
         binding.flipVertical.setOnClickListener(view -> {
 
             if (sticker == null && sticker1 == null && stickermouth == null && stickernose == null && stickergesture == null && stickerbread == null && stickerhair == null && stickerglass == null) {
-                Toast.makeText(this, "please add sticker to remove", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
             } else {
                 if (delete.equals("eye")) {
                     if (sticker == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = sticker;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -745,7 +780,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("eye_brow")) {
                     if (sticker1 == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
 
                     } else {
                         View mainView = sticker1;
@@ -758,7 +793,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("mouth")) {
                     if (stickermouth == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickermouth;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -770,7 +805,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("gesture")) {
                     if (stickergesture == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickergesture;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -782,7 +817,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("nose")) {
                     if (stickernose == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickernose;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -794,7 +829,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("bread")) {
                     if (stickerbread == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerbread;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -806,7 +841,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("hair")) {
                     if (stickerhair == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerhair;
                         mainView.setRotationX(isFlipped ? 0f : -180f);
@@ -818,7 +853,7 @@ public class CreateIconActivity extends AppCompatActivity {
                 }
                 if (delete.equals("glass")) {
                     if (stickerglass == null) {
-                        Toast.makeText(this, "please add sticker to flip", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, ""+getText(R.string.please_flip), Toast.LENGTH_SHORT).show();
                     } else {
                         View mainView = stickerglass;
                         mainView.setRotationX(isFlipped ? 0f : -180f);

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emojitest.R;
 import com.example.emojitest.util.SharePrefUtils;
+import com.example.emojitest.util.SystemUtil;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         if (!isTaskRoot()

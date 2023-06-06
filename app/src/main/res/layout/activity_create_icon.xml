@@ -20,12 +20,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
+
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/rl_view"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" />
+
         <ImageView
             android:id="@+id/img_bg"
             android:layout_width="match_parent"
@@ -36,54 +38,58 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_seekbar"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#80000000"
         android:paddingHorizontal="@dimen/dp10"
         android:paddingVertical="@dimen/dp10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/rl_control"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <TextView
-            android:textColor="@color/white"
-            android:layout_marginStart="@dimen/dp5"
             android:id="@+id/text_blur"
+            style="@style/TextViewBase"
+            android:layout_marginStart="@dimen/dp5"
             android:fontFamily="@font/poppins_medium_500"
-            android:textSize="@dimen/sp16"
             android:text="Blur"
-            style="@style/TextViewBase"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16" />
+
         <SeekBar
-            android:max="30"
-            android:min="5"
             android:id="@+id/seek_bar"
-            android:progressDrawable="@drawable/see_bar_on"
-            android:progressTint="#DF6F00"
-            android:maxHeight="4dp"
-            android:minHeight="4dp"
-            android:layout_marginHorizontal="@dimen/dp10"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/text_blur"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/dp10"
+            android:layout_toEndOf="@id/text_blur"
+            android:max="30"
+            android:maxHeight="4dp"
+            android:min="5"
+            android:minHeight="4dp"
+            android:progressDrawable="@drawable/see_bar_on"
+            android:progressTint="#DF6F00" />
     </RelativeLayout>
+
     <LinearLayout
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/rl_image"
         android:id="@+id/rl_control"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@id/rl_image">
 
         <RelativeLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:paddingHorizontal="@dimen/dp10"
             android:paddingVertical="@dimen/dp10">
 
@@ -132,190 +138,210 @@
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:background="#F4DED3" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
-            android:background="@color/white"
+            android:id="@+id/rcy_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp10"
             android:layout_marginTop="@dimen/dp10"
             android:layout_marginBottom="@dimen/dp5"
-            tools:itemCount="20"
+            android:background="@color/white"
             android:orientation="vertical"
-            tools:listitem="@layout/item_layout_icon"
-            app:spanCount="6"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:id="@+id/rcy_icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:spanCount="6"
+            tools:itemCount="20"
+            tools:listitem="@layout/item_layout_icon" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
+            android:id="@+id/rcy_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp5"
             android:background="@color/white"
-            tools:itemCount="6"
             android:orientation="vertical"
-            tools:listitem="@layout/item_background"
-            app:spanCount="3"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:id="@+id/rcy_background"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:spanCount="3"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_background" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ln_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:visibility="invisible"
             android:id="@+id/color"
-            android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/white"
-            android:src="@drawable/color_fl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="ContentDescription"
-            app:layout_constraintBottom_toTopOf="@id/camera"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp10"
-            android:layout_marginBottom="@dimen/dp10"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:visibility="invisible"
-            android:layout_marginVertical="@dimen/dp10"
-            android:id="@+id/camera"
             android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/white"
-            android:src="@drawable/cam_fl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="ContentDescription"
-            app:layout_constraintBottom_toTopOf="@id/album"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp10"
-            android:layout_marginBottom="@dimen/dp10"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:visibility="invisible"
-            android:id="@+id/album"
-            android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/white"
-            android:src="@drawable/album_fl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="ContentDescription"
-            app:layout_constraintBottom_toTopOf="@id/add"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp10"
-            android:layout_marginBottom="@dimen/dp10"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_marginEnd="@dimen/dp10"
             android:layout_marginBottom="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:id="@+id/add"
-            android:visibility="visible"
-            android:layout_gravity="bottom|end"
+            android:src="@drawable/color_fl"
+            android:visibility="invisible"
             app:backgroundTint="@color/white"
-            android:src="@drawable/add_float"
+            app:layout_constraintBottom_toTopOf="@id/camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginVertical="@dimen/dp10"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:src="@drawable/cam_fl"
+            android:visibility="invisible"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/album"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:src="@drawable/album_fl"
+            android:visibility="invisible"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/add"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:src="@drawable/add_float"
+            android:visibility="visible"
+            app:backgroundTint="@color/white"
             tools:ignore="ContentDescription" />
     </LinearLayout>
+
     <View
         android:id="@+id/view"
-        app:layout_constraintBottom_toTopOf="@id/bottom"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#F4DED3" />
+        android:background="#F4DED3"
+        app:layout_constraintBottom_toTopOf="@id/bottom" />
+
     <HorizontalScrollView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:background="@color/white"
-            android:paddingVertical="@dimen/dp20"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/dp20">
+
             <ImageView
                 android:id="@+id/icon_bg"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_marginStart="@dimen/dp10"
                 android:layout_marginEnd="@dimen/dp10"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
                 android:src="@drawable/ic_bg_choose_no" />
+
             <ImageView
                 android:id="@+id/icon_icon"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_choose2" />
+
             <ImageView
                 android:id="@+id/icon_add"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_add" />
+
             <ImageView
                 android:id="@+id/icon_eye"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_age" />
+
             <ImageView
                 android:id="@+id/icon_eyebrow"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_eyebrow" />
+
             <ImageView
                 android:id="@+id/icon_mouth"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_mouth" />
+
             <ImageView
                 android:id="@+id/icon_addition"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_addition" />
+
             <ImageView
                 android:id="@+id/icon_nose"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_nose" />
+
             <ImageView
                 android:id="@+id/icon_beard"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_beard" />
+
             <ImageView
                 android:id="@+id/icon_hair"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_hair" />
+
             <ImageView
                 android:id="@+id/icon_glass"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_glass" />
+
             <ImageView
                 android:id="@+id/icon_album"
-                android:layout_marginHorizontal="@dimen/dp10"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginHorizontal="@dimen/dp10"
                 android:src="@drawable/ic_bg_album" />
         </LinearLayout>
     </HorizontalScrollView>

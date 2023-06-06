@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.emojitest.R;
 import com.example.emojitest.adapter.MyCreationAdapter;
+import com.example.emojitest.util.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class LoadImageScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SystemUtil.setLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_image);
         rcvListImg = findViewById(R.id.rcvListImg);
